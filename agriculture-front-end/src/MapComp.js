@@ -7,6 +7,7 @@ const MapComp = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [stringKey, setKey] = useState('');
 
+  // ChatGPT
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -14,6 +15,8 @@ const MapComp = () => {
     
     return () => clearTimeout(timer);
   }, []);
+
+  
   fetch(raw)
   .then(r => r.text())
   .then(text => {
