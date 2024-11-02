@@ -14,7 +14,6 @@ const MapComp = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize); 
   }, []);
-  console.log(mapWidth);
 
   // ChatGPT
   useEffect(() => {
