@@ -7,6 +7,8 @@ def prediction(lat,lon, fertilizer):
     ph_ = ph(lat,lon)
     temp, humidity, precipitation = weather(lat,lon)
     # pre1, pre2, pre3 = "corn", "wheat", "random"
+    if ph_ == None:
+        ph_ = (nitrogen * .1) + (phosporus * .05) + 6 # Nitrogen affects ph more than phosporus. There needs to be a baseline.
 
     # In order
     print(nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation)
@@ -16,14 +18,14 @@ def prediction(lat,lon, fertilizer):
 
     return nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation#, pre1, pre2, pre3
 
-prediction(39.099724, -94.578331, 1)
-prediction(38, -94, 2)
-prediction(37, -93, 3)
-prediction(37, -94, 4)
-prediction(37, -95, 5)
-prediction(37, -94.5, 6)
-prediction(38, -95, 7)
-prediction(38, -94, 8)
-prediction(38, -93, 9)
-prediction(38, -94.5, 10)
-prediction(38, -95, 11)
+# prediction(39.099724, -94.578331, 1)
+# prediction(38, -94, 2)
+# prediction(37, -93, 3)
+# prediction(37, -94, 4)
+# prediction(37, -95, 5)
+# prediction(37, -94.5, 6)
+# prediction(38, -95, 7)
+# prediction(38, -94, 8)
+# prediction(38, -93, 9)
+# prediction(38, -94.5, 10)
+# prediction(38, -95, 11)
