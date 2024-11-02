@@ -46,5 +46,4 @@ const MapComp = () => {
     </APIProvider>
 };
 
-
 export default MapComp;

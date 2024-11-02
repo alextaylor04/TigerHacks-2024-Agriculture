@@ -1,18 +1,28 @@
 import React from 'react';
 import Box from './Box';
-import {Link} from 'react';
-import MapComp from './MapComp';
-/*
-<Link to='/'>Home</Link>
-<Link to='/Crops'>Crops</Link>
-*/
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import Crops from './Crops';
+
 const App = () => {
     return (
       <div>
-
-        <MapComp/>  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <nav className='links'>
-          
+          <BrowserRouter>
+          <Routes>
+            <Route index element={
+              <>
+                <div className="home-flex">
+                  <MapComp></MapComp>
+                  <Box></Box>
+                </div>
+              </>
+              }></Route>
+            <Route path="/Crops" element={
+              <Crops/>
+              }></Route>
+          </Routes>
+          </BrowserRouter>
         </nav>
       </div>
     );
