@@ -1,7 +1,7 @@
 import React from 'react';
-import MapComp from './MapComp';
 import Box from './Box';
 import {Link} from 'react';
+import MapComp from './MapComp';
 /*
 <Link to='/'>Home</Link>
 <Link to='/Crops'>Crops</Link>
@@ -9,8 +9,8 @@ import {Link} from 'react';
 const App = () => {
     return (
       <div>
-        <MapComp></MapComp>
-        <Box></Box>
+
+        <MapComp/>  
         <nav className='links'>
           
         </nav>

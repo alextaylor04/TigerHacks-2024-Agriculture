@@ -1,137 +1,50 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api';
-import raw from './passwords.txt';
-import { Button } from 'bootstrap';
+import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
+import React, { useState } from 'react';
 
 const MapComp = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [stringKey, setKey] = useState('');
-  const [map, setMap] = useState(null);
-  const [showLabels, setShowLabels] = useState(true);
+    const [showLabels, setShowLabels] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, []);
-  fetch(raw)
-  .then(r => r.text())
-  .then(text => {
-    setKey(text);
-  });
-  const options = {
-    disableDefaultUI: true,
-    mapTypeId: 'satellite',
-    scaleControl: true,
-    streetViewControl: false,
-    mapTypeControl: true,
-    fullscreenControl: true,
-    draggableCursor: 'default',
-    styles: showLabels ? [] : [{ featureType: 'all', elementType: 'labels', stylers: [{ visibility: 'off' }] }],
-  };
+    const mapClickEvent = (ev) => {
+        console.log(ev)
+        const latLng = ev.detail.latLng;
+        const lat = latLng.lat;
+        const lng = latLng.lng;
+        console.log(lat)
+        console.log(lng)
+    };
 
-  const center = {
-    lat: 38.522953693700295, 
-    lng: -92.71854679370469, 
-  };
-  var Mapclick = function (event) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    console.log("lat:" + lat);
-    console.log("lng:" + lng);
-  }
-const CustomControlButton = ({ onClick }) => {
-  return (
-    <button
-      style={{
-        backgroundColor: '#fff',
-        border: '2px solid #000',
-        borderRadius: '3px',
-        padding: '5px',
-        cursor: 'pointer',
-        margin: '10px',
-      }}
-      onClick={onClick}
-    >
-      Click me
-    </button>
-  );
+    const toggleLabels = () => {
+        setShowLabels(!showLabels)
+    };
+
+    const mapStylesWithoutLabels = [
+        {
+          featureType: 'all',
+          elementType: 'labels',
+          stylers: [{ visibility: 'off' }]
+        }
+      ];
+
+      const mapStylesWithLabel = []; //for clarity
+
+    return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <Map 
+        style = {{width: '100vw', height: '100vh'}}
+        defaultCenter={{lat:22.54992, lng:0}}
+        defaultZoom={3}
+        gestureHandling={'greedy'}
+        disableDefaultUI={true}
+        mapTypeId={'hybrid'}
+        zoomControl={true}
+        fullscreenControl={true}
+        styles={showLabels ? mapStylesWithLabel : mapStylesWithoutLabels}
+        onClick={ev => mapClickEvent(ev)}>
+            <MapControl position={ControlPosition.TOP}>
+                <button onClick={toggleLabels}>Toggle Labels</button>
+            </MapControl>
+        </Map>
+    </APIProvider>
 };
 
-const handleButtonClick = () => {
-  setShowLabels((prev) => !prev); // Toggle the state
-
-    if (map) {
-      // Update the styles based on the new state
-      map.setOptions({
-        styles: !showLabels ? [] : [{ featureType: 'all', elementType: 'labels', stylers: [{ visibility: 'off' }] }],
-      });
-    }
-};
-
-const LoadControl = function(map) {
-  if (map) {
-    const controlDiv = document.createElement('div');
-
-    const buttonElement = ReactDOM.render(
-      <CustomControlButton onClick={handleButtonClick} />,
-      controlDiv
-    );
-
-    const root = ReactDOM.createRoot(controlDiv);
-    root.render(<CustomControlButton onClick={handleButtonClick} />);
-
-    map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
-  }
-}
-useEffect(() => {
-  if (map) {
-    LoadControl(map); // Add custom control when the map instance is set
-    // Update the map options to reflect the current state of showLabels
-    map.setOptions({
-      styles: showLabels
-        ? [] 
-        : [{ featureType: 'all', elementType: 'labels', stylers: [{ visibility: 'off' }] }],
-    });
-  }
-}, [map, showLabels]); // Run this effect when map or showLabels changes
-
-
-    return (
-      <div>
-      {isVisible ? (
-      
-        <LoadScript googleMapsApiKey={stringKey}>
-          <GoogleMap className="google"
-            mapContainerStyle={{
-              width: '60%',
-              height: '100vh',
-              }}
-            center={center}
-            options={options}
-            zoom={15}
-            onLoad={(mapInstance) => {
-              setMap(mapInstance);
-              LoadControl(mapInstance); 
-            }}
-            onClick= {ev => {
-              Mapclick(ev)
-            }}
-            >           
-      
-        
-          </GoogleMap>
-        </LoadScript>
-      ) : (
-        <h1></h1>
-      )}
-      </div>
-    );
-};
 
 export default MapComp;
-
