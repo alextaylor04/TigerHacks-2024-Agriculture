@@ -1,5 +1,4 @@
 import React from 'react';
-import MapComp from './MapComp';
 import Box from './Box';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import Crops from './Crops';

@@ -1,83 +1,49 @@
-import React from 'react';
-import {useEffect, useState } from 'react';
-import { GoogleMap, LoadScriptNext, Marker } from '@react-google-maps/api';
-import raw from './passwords.txt';
-import { useLocation } from 'react-router-dom';
+import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
+import React, { useState } from 'react';
 
 const MapComp = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [stringKey, setKey] = useState('');
-  const [mapWidth, setWidth] = useState((window.innerWidth * 0.6) + "px");
+    const [showLabels, setShowLabels] = useState(true);
 
-  useEffect(() => {
-    const handleResize = () => setWidth((window.innerWidth * 0.6) + "px");
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize); 
-  }, []);
+    const mapClickEvent = (ev) => {
+        console.log(ev)
+        const latLng = ev.detail.latLng;
+        const lat = latLng.lat;
+        const lng = latLng.lng;
+        console.log(lat)
+        console.log(lng)
+    };
 
-  // ChatGPT
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, []);
+    const toggleLabels = () => {
+        setShowLabels(!showLabels)
+    };
 
-  fetch(raw)
-  .then(r => r.text())
-  .then(text => {
-    setKey(text);
-  });
-  const options = {
-    disableDefaultUI: false,
-    mapTypeId: 'satellite',
-    scaleControl: false,
-    streetViewControl: false,
-    fullscreenControl: true
-  };
+    const mapStylesWithoutLabels = [
+        {
+          featureType: 'all',
+          elementType: 'labels',
+          stylers: [{ visibility: 'off' }]
+        }
+      ];
 
-  const center = {
-    lat: 38.522953693700295, 
-    lng: -92.71854679370469, 
-  };
-  var Mapclick = function (event) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    console.log("lat:" + lat);
-    console.log("lng:" + lng);
-  }
- 
-  
-    return (
-      <div className="screen">
-      {isVisible ? (
-      
-      
-        
-    
-      <LoadScriptNext className="googleHolder" googleMapsApiKey={stringKey}>
-                <GoogleMap mapContainerStyle={{
-                    width: mapWidth,
-                    height: '100vh',
-                    }}
-                  center={center}
-                  options={options}
-                  zoom={3}
-                  onClick= {ev => {
-                    Mapclick(ev)
-                  }}
-                  >           
-            
-              
-                </GoogleMap>
-              </LoadScriptNext>
-              
-              ) : (
-                <h1></h1>
-            )}
-   </div>
-    );
+      const mapStylesWithLabel = []; //for clarity
+
+    return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <Map 
+        style = {{width: '100vw', height: '100vh'}}
+        defaultCenter={{lat:22.54992, lng:0}}
+        defaultZoom={3}
+        gestureHandling={'greedy'}
+        disableDefaultUI={true}
+        mapTypeId={'hybrid'}
+        zoomControl={true}
+        fullscreenControl={true}
+        styles={showLabels ? mapStylesWithLabel : mapStylesWithoutLabels}
+        onClick={ev => mapClickEvent(ev)}>
+            <MapControl position={ControlPosition.TOP}>
+                <button onClick={toggleLabels}>Toggle Labels</button>
+            </MapControl>
+        </Map>
+    </APIProvider>
 };
 
 export default MapComp;
