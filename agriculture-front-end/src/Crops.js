@@ -1,8 +1,15 @@
 import React from 'react';
 import './crops.css';
+import { useNavigate } from 'react-router-dom';
 
 const Crops = () => {
+    const navigate = useNavigate();
+    const goToHome = () => {
+        navigate('/', { state: { reload: true } });
+      };
+      
     return (<div>
+        <div className="Home-Icon" onClick={goToHome}>Home</div>
         <p>crops</p>
         <div className='multiCropHolder'>
             <div className="cropHolder">

@@ -7,13 +7,16 @@ import Crops from './Crops';
 const App = () => {
     return (
       <div>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <nav className='links'>
           <BrowserRouter>
           <Routes>
             <Route index element={
               <>
-                <MapComp></MapComp>
-                <Box></Box>
+                <div className="home-flex">
+                  <MapComp></MapComp>
+                  <Box></Box>
+                </div>
               </>
               }></Route>
             <Route path="/Crops" element={
