@@ -22,6 +22,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const [coordMargin, updateCoordMargin] = useState('50px');
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
+  const [fertValue, updateFertValue] = useState(-1);
   const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); // ./Images/51sHm3pQHL._AC.png
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
@@ -41,9 +42,10 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
     const locationData = {
       latitude: lat,
       longitude: long,
-      fertilizer: 1
+      fertilizer: fertValue
     };
 
+    
   try {
       const response = await fetch('/api/data', {
           method: 'POST',
@@ -62,36 +64,28 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
       updatePhosp(result['phosphorous'])
       updatePot(result['potassium'])
 
-      console.log(result); // Handle the response from the server
+       // Handle the response from the server
   } catch (error) {
       console.error('Error sending location:', error);
   }
+  var test = setTimeout(goToCrops, 2000);
 }
   
-  var submitCoords = function () {
-    // // do checks here
-    // updateDataDis("");
-    // updatestageOneDis("d-none");
-    // updateCoordMargin("30px");
-    // updateLoadingState('');
-    // updateImgDis('d-none');
-    // updateaiData("bob");
-    // setTimeout(goToCrops, 2000);
-  }
+  
   
   bouncy.register()
   const ImageReq = {
     a:  require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
     b: require('./Images/9k-removebg-preview.png'),
     c: require('./Images/21-0-0_ammonium_sulfate-removebg-preview.png'),
-    d: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    e: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    f: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    g: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    h: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    i: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    j: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
-    k: require('./Images/51sHm3pQHL._AC_-removebg-preview.png')
+    d: require('./Images/DAP-Diammonium-Phosphate-baozhuang-removebg-preview.png'),
+    e: require('./Images/81hUqcalOwL-removebg-preview.png'),
+    f: require('./Images/9k-removebg-preview.png'),
+    g: require('./Images/Z-removebg-preview.png'),
+    h: require('./Images/Z__1_-removebg-preview.png'),
+    i: require('./Images/shopping-removebg-preview.png'),
+    j: require('./Images/shopping__1_-removebg-preview.png'),
+    k: require('./Images/shopping__2_-removebg-preview.png')
   }
   var valList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
   var pastValue = -1;
@@ -102,6 +96,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
       let selString = ImageReq[valList[selValue - 1]];
       updateImgDis('');
       updateMyImage(selString);
+      updateFertValue(selValue);
     }
   }
 
