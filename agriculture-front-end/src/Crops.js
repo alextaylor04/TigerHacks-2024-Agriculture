@@ -13,6 +13,7 @@ const Crops = ({ aiData, updateaiData }) => {
         updateaiData(0);
     };
 
+      
     const [plant1, updateP1] = useState('');
     const [plant2, updateP2] = useState('');
     const [plant3, updateP3] = useState('');
@@ -36,6 +37,8 @@ const Crops = ({ aiData, updateaiData }) => {
 
     useEffect(() => {
         console.log(aiData);
+    }
+    useEffect(() => {
         updateP1(aiData.cropPredictions[0]);
         updateP2(aiData.cropPredictions[1]);
         updateP3(aiData.cropPredictions[2]);
