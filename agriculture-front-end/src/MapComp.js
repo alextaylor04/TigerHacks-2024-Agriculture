@@ -1,7 +1,7 @@
 import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
 import React, { useState} from 'react';
 
-const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
+const MapComp = ({inputLan, updateLat, inputLong, updateLong, updateOnClick}) => {
     const [showLabels, setShowLabels] = useState(true);
     const [typeValue, setTypeValue] = useState("hybrid");
 
@@ -15,6 +15,7 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
         updateLong(lng);
         console.log(lat)
         console.log(lng)
+        updateOnClick();
     };
 
     const toggleLabels = () => {

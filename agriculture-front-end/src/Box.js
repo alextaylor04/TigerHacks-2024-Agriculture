@@ -7,7 +7,7 @@ import { bouncy } from 'ldrs';
 
 
 
-const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
+const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) => {
   const navigate = useNavigate();
   const [Temp, updateTemp] = useState('');
   const [Rainfall, updateRain] = useState('');
@@ -24,10 +24,27 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
+  const [buttonColor, updateButtonColor] = useState("lightgrey");
+  const [buttonBorder, updateButtonBorder] = useState("grey");
+  const [mapClickStatus, updateMapClickStatus] = useState(-1);
+  const [buttonStatus, updateButtonStatus] = useState(-1);
   const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); 
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); 
   };
+  var changeButton = function () {
+    updateButtonStatus(1);
+    updateButtonColor("lightgreen");
+    updateButtonBorder("darkgreen");
+  }
+  useEffect(() => {
+    if (effect) {
+      updateMapClickStatus(1);
+      if (fertValue != -1) {
+        changeButton();
+      }
+    }
+  }, [effect]);
   var sumbitPhase = function () {
     updateDataDis('');
     updatestageOneDis('d-none');
@@ -39,60 +56,75 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
     updateLastStageDis('');
   }
   var movingToCropsSetup = function () {
-    // update values somehow
+    updateaiData(1);
     goToCrops();
   }
+  var oldSubmit = function () {
+    if (buttonStatus === 1) {
+      updateTemp(infoJSON["Temp"]);
+      updateRain(infoJSON["Rain"]);
+      updateHum(infoJSON["Hum"]);
+      updatePh(infoJSON["Ph"]);
+      updateNit(infoJSON["Nit"]);
+      updatePhosp(infoJSON["Posp"]);
+      updatePot(infoJSON["Pot"]);
+      sumbitPhase();
 
-  var submitCoords = async function () {
-    sumbitPhase();
-    const locationData = {
-      latitude: lat,
-      longitude: long,
-      fertilizer: fertValue
-    };
-
-    
-  try {
-      const response = await fetch('/api/data', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(locationData),
-      });
-
-      const result = await response.json();
-      updateTemp(result['temp'])
-      updateRain(result['precipitation'])
-      updateHum(result['humidity'])
-      updatePh(result['ph'])
-      updateNit(result['nitrogen'])
-      updatePhosp(result['phosphorous'])
-      updatePot(result['potassium'])
-
-       // Handle the response from the server
-  } catch (error) {
-      console.error('Error sending location:', error);
+      var test = setTimeout(finishLoading, 2000);
+    }
   }
 
-try {
-    const response = await fetch('/api/pred/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(locationData),
-    });
+var submitCoords = async function () {
+  if (buttonStatus === 1) {
+      sumbitPhase();
+      const locationData = {
+        latitude: lat,
+        longitude: long,
+        fertilizer: fertValue
+      };
 
-    const result = await response.json();
-    updateaiData(result);
-    finishLoading();
-    
-} catch (error) {
-    console.error('Error sending location:', error);
-}
+        
+      try {
+          const response = await fetch('/api/data', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(locationData),
+          });
 
+          const result = await response.json();
+          updateTemp(result['temp'])
+          updateRain(result['precipitation'])
+          updateHum(result['humidity'])
+          updatePh(result['ph'])
+          updateNit(result['nitrogen'])
+          updatePhosp(result['phosphorous'])
+          updatePot(result['potassium'])
 
+          // Handle the response from the server
+      } catch (error) {
+          console.error('Error sending location:', error);
+      }
+
+    try {
+        const response = await fetch('/api/pred/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(locationData),
+        });
+
+        const result = await response.json();
+        updateaiData(result);
+        finishLoading();
+        
+    } catch (error) {
+        console.error('Error sending location:', error);
+    }
+
+  }
 }
   
   
@@ -120,6 +152,9 @@ try {
       updateImgDis('');
       updateMyImage(selString);
       updateFertValue(selValue);
+      if (mapClickStatus === 1) {
+        changeButton();
+      }
     }
   }
 
@@ -151,7 +186,7 @@ try {
           <li className="list-group-item">Potassium (K): {Pot}%</li>
         </ul>
         <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
-        <button className={"submit " + stageOneDis} id="submit" onClick={submitCoords}>Submit Coords</button>
+        <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit} style={{"backgroundColor": buttonColor, "borderColor": buttonBorder}}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">

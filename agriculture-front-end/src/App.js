@@ -9,6 +9,10 @@ const App = () => {
   const [lat, updateLat] = useState(0);
   const [long, updateLong] = useState(0);
   const [aiData, updateaiData] = useState('');
+  const [effect, setEffect] = useState(false);
+  const updateOnClick = () => {
+    setEffect(!effect); // Toggle the effect state
+  };
     return (
       <div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -18,8 +22,8 @@ const App = () => {
             <Route index element={
               <>
                 <div className="home-flex">
-                  <MapComp lat={lat} updateLat={updateLat} long={long} updateLong={updateLong}></MapComp>
-                  <Box lat={lat} updateLat={updateLat} long={long} updateLong={updateLong} aiData={aiData} updateaiData={updateaiData}></Box>
+                  <MapComp updateOnClick={updateOnClick} lat={lat} updateLat={updateLat} long={long} updateLong={updateLong}></MapComp>
+                  <Box effect={effect} lat={lat} updateLat={updateLat} long={long} updateLong={updateLong} aiData={aiData} updateaiData={updateaiData}></Box>
                 </div>
               </>
               }></Route>

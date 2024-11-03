@@ -1,6 +1,6 @@
 import React from 'react';
 import './crops.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Crops = ({aiData, updateaiData}) => {
@@ -11,6 +11,7 @@ const Crops = ({aiData, updateaiData}) => {
       window.onload = function () {
         updateaiData(0);
       }
+      
     const [plant1, updateP1] = useState('');
     const [plant2, updateP2] = useState('');
     const [plant3, updateP3] = useState('');
@@ -32,8 +33,7 @@ const Crops = ({aiData, updateaiData}) => {
     const clickFunc = (event) => {
         console.log(aiData)
     }
-
-    window.onload = (event) => {
+    useEffect(() => {
         console.log(aiData)
         console.log('test')
         updateP1("Corn");
@@ -53,7 +53,9 @@ const Crops = ({aiData, updateaiData}) => {
         updateA3P1("Apples are one of the most popular and widely cultivated fruits globally, known for their crisp texture and sweet-tart flavor. Originating from Central Asia, they have been grown for thousands of years and come in a wide variety of cultivars, such as Fuji, Gala, and Granny Smith, each with its own unique taste and texture.");
         updateA3P2("Apples grow best in temperate climates with cold winters and moderate summers. They require well-drained, loamy soil with a pH between 6.0 and 7.0, and plenty of sunlight for at least 6 to 8 hours a day. Most apple varieties also need a certain number of chill hours (typically between 500 to 1,000 hours below 45°F) during the winter for proper fruit development.");
         updateA3P3("Apple trees generally begin producing fruit 3 to 5 years after planting, depending on the variety and rootstock. A mature apple tree can yield between 150 to 300 apples per season, with some high-density orchards producing even more. Harvest time varies by variety, but apples are typically picked in late summer to fall, once they reach their desired color and ripeness.");
-      };
+      
+    }, []);
+    
 
     return (
     <>
