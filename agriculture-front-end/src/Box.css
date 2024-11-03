@@ -10,10 +10,25 @@
     text-align: center;
     width:100%;
 }
-
+.fertilizer {
+    margin-top: 20px;
+}
+.form-select {
+    margin-top: -5px;
+}
+.Loading {
+    margin-top: 150px;
+    display: flex;
+    gap: 5px;
+    font-size: 25px;
+    font-weight:700;
+}
+.test {
+    margin-top: 5px;
+}
 .submit {
     padding: 0;
-    margin-top: 25%;
+    margin-top: 20px;
     width: 50%;
     height: 45px;
     background-color: lightgreen;
@@ -22,4 +37,8 @@
 }
 .submit:hover {
     background-color: rgb(128, 227, 128);
+}
+img {
+    width: 300px;
+    margin-top: 30px;
 }
