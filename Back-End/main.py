@@ -32,7 +32,7 @@ def make_prediction():
     fertilizer = data.get('fertilizer')
 
     prediction_indices = apis.prediction(latitude, longitude, fertilizer)
-    cropOrder = ["rice", "maize", "chickpea", "kidneybeans", "pigeonpeas", "mothbeans", "mungbean", "blackgram", "lentil", "pomegranate", "banana", "mango", "grapes", "watermelon", "muskmelon", "apple", "orange", "papaya", "coconut", "cotton", "jute", "coffee"]
+    cropOrder = ["Rice", "Maize", "Chickpea", "Kidney Beans", "Pigeon Peas", "Moth Beans", "Mung Nean", "Black Gram", "Lentil", "Pomegranate", "Banana", "Mango", "Grapes", "Watermelon", "Muskmelon", "Apple", "Orange", "Papaya", "Coconut", "Cotton", "Jute", "Coffee"]
     predictions = [cropOrder[i] for i in prediction_indices if i < len(cropOrder)]
 
     
@@ -46,11 +46,12 @@ def make_prediction():
 
     prediction_images = []
     for pred in predictions:
-        prediction_images.append(google_image.google_image_search(pred))
+        prediction_images.append(google_image.google_image_search(pred + ' crop'))
     
-    labels = ['cropPredictions', 'answer1part1', 'answer1part2', 'answer1part3', 'answer2part1', 'answer2part2', 'answer2part3', 'answer3part1', 'answer3part2', 'answer3part3', 'prediction_images']
+    labels = ['cropPredictions', 'answer1part1', 'answer2part1', 'answer3part1', 'answer1part2', 'answer2part2', 'answer3part2', 'answer1part3', 'answer2part3', 'answer3part3', 'prediction_images']
     values = [predictions]
     for desc in crop_desc:
+        print(desc)
         values.append(desc)
     values.append(prediction_images)
 

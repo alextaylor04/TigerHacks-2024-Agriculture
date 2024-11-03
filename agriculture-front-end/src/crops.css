@@ -11,27 +11,50 @@
     align-items: top;
     justify-content: center;
     flex-direction: row;
-    gap: 30px;
+    gap: 60px;
+}
+.Home-Icon{
+    font-size: 20px;
+    color:white;
+    background-color: #363535;
+}
+.logo{
+    height: 100px;
 }
 .cropHolder {
-    width: 270px;
+    padding: 0px 15px;
+    width: 400px;
     text-align: center;
-    background-color: #1aa64b;
+    background-color: #1db050;
     border-radius: 10px;
-    border: 1px solid rgb(0, 0, 0);
+    border: 10px solid rgb(0, 78, 18);
 }
-.cropHolder p {
-    margin-top: 10px;
-    font-size: 25px;
-}
+
 .cropHolder img {
-    width: 240px;
+    width: auto;
 }
 .cropHolder .text {
-    font-size: 15px;
+    font-size: 18px;
     text-align: left;
 }
-img{
+.image{
     height: 200px;
     width: auto;
+    margin-bottom: 20px;
+}
+.heading {
+    font-size: 23px;
+    font-weight: 900;
+    color:white;
+}
+
+.optimize {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 700;
+}
+.name{
+    font-size: 40px;
+    font-weight: 600;
 }

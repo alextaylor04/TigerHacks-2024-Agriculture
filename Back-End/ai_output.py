@@ -43,7 +43,6 @@ def crop_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfal
         messages = [
             {"role": "user", "content": provide_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfall, N, P, K)}],
     ).choices[0].message.content
-    print(resp)
     answer1 = resp.split('*')[0]
     answer2 = resp.split('*')[1]
     answer3 = resp.split('*')[2]
@@ -95,7 +94,7 @@ pre3 = "bannans"
 
 nitrogen_, phosporus_, potassium_, temp_, humidity_, ph_, precipitation_ = tuple(raw_api_data(lat, lon, 1))
 crop = "mung beans"
-print(different_plant('mungbean', lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
+#print(different_plant('mungbean', lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
 # # print(american_crop(crop, lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
 # answer1part1, answer1part2, answer1part3, answer2part1, answer2part2, answer2part3, answer3part1, answer3part2, answer3part3 = crop_description(pre1, pre2, lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_)
 # print(answer1part1)
