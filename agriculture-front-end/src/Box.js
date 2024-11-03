@@ -24,9 +24,9 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
-  const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); // ./Images/51sHm3pQHL._AC.png
+  const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); 
   const goToCrops = () => {
-    navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
+    navigate('/Crops', { state: { userId: 123 } }); 
   };
   var sumbitPhase = function () {
     updateDataDis('');
