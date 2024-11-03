@@ -14,6 +14,10 @@ def npk(fertilizer):
         11: (16, 4, 8)   # 16-4-8
     }
     
-    nitrogen, phosphorus, potassium = fertilizer_npk.get(fertilizer, (0, 0, 0))
+    fertilizer = int(fertilizer) #guarantee it is an integer
+    nitrogen, phosphorus, potassium = fertilizer_npk.get(fertilizer)
+    nitrogen += 30
+    phosphorus += 30
+    potassium += 30
     
     return nitrogen, phosphorus, potassium

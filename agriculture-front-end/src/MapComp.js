@@ -19,7 +19,7 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
 
     const toggleLabels = () => {
         setShowLabels(!showLabels)
-        if (typeValue == "hybrid") {
+        if (typeValue === "hybrid") {
           setTypeValue("satellite");
         } else {
           setTypeValue("hybrid");

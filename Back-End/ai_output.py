@@ -64,26 +64,25 @@ def crop_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfal
 
 def provide_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfall, N, P, K): # 1 paragraph 3 sentences
     prompt = (
-        f"According to our calculations, we have decided we predicted that the best crops to plant are these: {pre1} {pre2}, you chose {gpt_pred}\n"
-        f"Here is some important information about Latitude: {lat}, Longitude: {lon}:\n"
-        f"temperature - temperature in degrees Celsius: {temp}\n"
-        f"humidity - relative humidity in %: {humidity}\n"
-        f"ph - pH value of the soil: {ph}\n"
-        f"rainfall - rainfall in mm: {rainfall}\n"
-        f"N - ratio of Nitrogen content in soil: {N}\n"
-        f"P - ratio of Phosphorous content in soil: {P}\n"
-        f"K - ratio of Potassium content in soil: {K}\n"
-        "Why did we choose the first two crops? Why did you choose your prediction?\n"
-        "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN \n"
-        "What are the best growing conditions for each of these predicted crops?\n"
-        "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN\n"
-        "When should we harvest each of these crops?\n"
-        "How much of this crop should we expect to harvest each season?\n"
-        "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN . END IN * Similar to this format:\n"
-        "why we choose crop1 in 3 sentences| why we choose crop2 in 3 sentences| why you choose crop3 in 3 sentences\n"
-        "best growing conditions for crop1|best growing conditions for crop2|best growing conditions for crop3\n"
-        "what is the best time to harvest and expected harvest of crop1|what is the best time to harvest and expected harvest of crop2|what is the best time to harvest and expected harvest of crop3*\n"
-        "NO HEADERS"
+        f"We have analyzed the data and recommend the following crops: {pre1}, {pre2}. You chose: {gpt_pred}.\n"
+        f"Key location data for Latitude: {lat}, Longitude: {lon}:\n"
+        f"- Temperature (°C): {temp}\n"
+        f"- Humidity (%): {humidity}\n"
+        f"- Soil pH: {ph}\n"
+        f"- Rainfall (mm): {rainfall}\n"
+        f"- Nitrogen content (N): {N}\n"
+        f"- Phosphorous content (P): {P}\n"
+        f"- Potassium content (K): {K}\n"
+        "1. Why did we choose each of the recommended crops? Why did you choose your prediction?\n"
+        "Provide 3 paragraphs, 1 for each crop, with 3 sentences each, separated by '|'. END WITH *. Format:\n"
+        "why we chose crop1| why we chose crop2| why you chose crop3*\n"
+        "2. What are the best growing conditions for each of these crops?\n"
+        "Provide 3 paragraphs, 1 for each crop, with 3 sentences each, separated by '|'. END WITH *. Format:\n"
+        "best conditions for crop1| best conditions for crop2| best conditions for crop3*\n"
+        "3. When should each crop be harvested, and what is the expected yield per season?\n"
+        "Provide 3 paragraphs, 1 for each crop, with 3 sentences each, separated by '|'. END WITH *. Format:\n"
+        "harvest and yield for crop1| harvest and yield for crop2| harvest and yield for crop3*\n"
+        "No headers."
     )
     return prompt
 
@@ -95,7 +94,7 @@ pre3 = "bannans"
 
 nitrogen_, phosporus_, potassium_, temp_, humidity_, ph_, precipitation_ = tuple(raw_api_data(lat, lon, 1))
 crop = "mung beans"
-print(different_plant('mungbean', lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
+#print(different_plant('mungbean', lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
 # # print(american_crop(crop, lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_))
 # answer1part1, answer1part2, answer1part3, answer2part1, answer2part2, answer2part3, answer3part1, answer3part2, answer3part3 = crop_description(pre1, pre2, lat, lon, temp_, humidity_, ph_, precipitation_, nitrogen_, phosporus_, potassium_)
 # print(answer1part1)

@@ -19,33 +19,41 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
   const [dataDis, updateDataDis] = useState('d-none');
   const [stageOneDis, updatestageOneDis] = useState('');
+  const [lastStageDis, updateLastStageDis] = useState('d-none');
   const [coordMargin, updateCoordMargin] = useState('50px');
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
+  const [fertValue, updateFertValue] = useState(-1);
   const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); // ./Images/51sHm3pQHL._AC.png
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
   };
-  // window.onload = (event) => {
-  //   updateTemp(infoJSON["Temp"]);
-  //   updateRain(infoJSON["Rain"]);
-  //   updateHum(infoJSON["Hum"]);
-  //   updatePh(infoJSON["Ph"]);
-  //   updateNit(infoJSON["Nit"]);
-  //   updatePosp(infoJSON["Posp"]);
-  //   updatePot(infoJSON["Pot"]);
-  // };
-  // do checks here
-  var submitCoords = async function () {
+  var sumbitPhase = function () {
+    updateDataDis('');
+    updatestageOneDis('d-none');
+    updateImgDis('d-none');
+    updateLoadingState('');
+  }
+  var finishLoading = function () {
+    updateLoadingState('d-none');
+    updateLastStageDis('');
+  }
+  var movingToCropsSetup = function () {
+    // update values somehow
+    goToCrops();
+  }
 
+  var submitCoords = async function () {
+    sumbitPhase();
     const locationData = {
       latitude: lat,
       longitude: long,
-      fertilizer: 1
-  };
+      fertilizer: fertValue
+    };
 
+    
   try {
-      const response = await fetch('/api/data', {
+      const response = await fetch('http://127.0.0.1:5000/api/data', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -62,41 +70,47 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
       updatePhosp(result['phosphorous'])
       updatePot(result['potassium'])
 
-      console.log(result); // Handle the response from the server
+       // Handle the response from the server
   } catch (error) {
       console.error('Error sending location:', error);
   }
 
-  window.onload = (event) => {
-    // 21-0-0_ammonium_sulfate.png
-    updateTemp(infoJSON["Temp"]);
-    updateRain(infoJSON["Rain"]);
-    updateHum(infoJSON["Hum"]);
-    updatePh(infoJSON["Ph"]);
-    updateNit(infoJSON["Nit"]);
-    updatePosp(infoJSON["Posp"]);
-    updatePot(infoJSON["Pot"]);
-  };
-  var submitCoords = function () {
-    // do checks here
-    updateDataDis("");
-    updatestageOneDis("d-none");
-    updateCoordMargin("30px");
-    updateLoadingState('');
-    updateImgDis('d-none');
-    updateaiData("bob");
-    setTimeout(goToCrops, 2000);
-  }
+try {
+    const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationData),
+    });
+
+    const result = await response.json();
+    updateaiData(result);
+    finishLoading();
+    
+} catch (error) {
+    console.error('Error sending location:', error);
+}
+
+
+}
+  
   
   bouncy.register()
   const ImageReq = {
-    a:  require('./Images/51sHm3pQHL._AC_.png'),
-    b: require('./Images/51sHm3pQHL._AC_.png'),
-    c: require('./Images/51sHm3pQHL._AC_.png'),
-    d: require('./Images/51sHm3pQHL._AC_.png'),
-    e: require('./Images/51sHm3pQHL._AC_.png')
+    a:  require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    b: require('./Images/9k-removebg-preview.png'),
+    c: require('./Images/21-0-0_ammonium_sulfate-removebg-preview.png'),
+    d: require('./Images/DAP-Diammonium-Phosphate-baozhuang-removebg-preview.png'),
+    e: require('./Images/81hUqcalOwL-removebg-preview.png'),
+    f: require('./Images/9k-removebg-preview.png'),
+    g: require('./Images/Z-removebg-preview.png'),
+    h: require('./Images/Z__1_-removebg-preview.png'),
+    i: require('./Images/shopping-removebg-preview.png'),
+    j: require('./Images/shopping__1_-removebg-preview.png'),
+    k: require('./Images/shopping__2_-removebg-preview.png')
   }
-  var valList = ['a', 'b', 'c', 'd', 'e'];
+  var valList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
   var pastValue = -1;
   var changeSelect = function (event) {
     var selValue = event.target.value
@@ -105,6 +119,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
       let selString = ImageReq[valList[selValue - 1]];
       updateImgDis('');
       updateMyImage(selString);
+      updateFertValue(selValue);
     }
   }
 
@@ -147,6 +162,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
             ></l-bouncy>
           </div>
         </div>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
       </div>
       );
 }
