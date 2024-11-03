@@ -29,8 +29,13 @@ const Crops = ({aiData, updateaiData}) => {
     const [a3p2, updateA3P2] = useState('');
     const [a3p3, updateA3P3] = useState('');
 
+    const clickFunc = (event) => {
+        console.log(aiData)
+    }
+
     window.onload = (event) => {
         console.log(aiData)
+        console.log('test')
         updateP1("Corn");
         updateP2("Bananas");
         updateP3("Apples");
@@ -87,6 +92,7 @@ const Crops = ({aiData, updateaiData}) => {
                 <p className = "text" >&emsp;{a3p3}</p>
             </div>
         </div>
+        <button onClick={clickFunc}></button>
     </div>
     ) : (
         <div>error </div>
