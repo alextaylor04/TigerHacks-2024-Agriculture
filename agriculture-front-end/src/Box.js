@@ -87,8 +87,27 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   } catch (error) {
       console.error('Error sending location:', error);
   }
+
+try {
+    const response = await fetch('/api/pred/data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationData),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    updateaiData('test');
+    goToCrops();
+    
+} catch (error) {
+    console.error('Error sending location:', error);
 }
-  
+
+
+}
   
   
   bouncy.register()

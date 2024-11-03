@@ -10,7 +10,6 @@ CSE_ID = os.getenv("GOOGLE_CX")
 def google_image_search(query, num_results=1):
 
     url = 'https://www.googleapis.com/customsearch/v1'
-
     params = {
         'key': API_KEY,
         'cx': CSE_ID,
