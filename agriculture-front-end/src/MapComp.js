@@ -1,66 +1,49 @@
-import React from 'react';
-import {useEffect, useState } from 'react';
-import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api';
-import raw from './passwords.txt';
+import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
+import React, { useState } from 'react';
 
 const MapComp = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [stringKey, setKey] = useState('');
+    const [showLabels, setShowLabels] = useState(true);
 
-  useEffect(() => {
-    // Set a timeout to change the visibility after 3 seconds (3000 milliseconds)
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
+    const mapClickEvent = (ev) => {
+        console.log(ev)
+        const latLng = ev.detail.latLng;
+        const lat = latLng.lat;
+        const lng = latLng.lng;
+        console.log(lat)
+        console.log(lng)
+    };
 
-    // Cleanup the timer on component unmount
-    return () => clearTimeout(timer);
-  }, []);
-  fetch(raw)
-  .then(r => r.text())
-  .then(text => {
-    setKey(text);
-    console.log(text);
-  });
-  const mapContainerStyle = {
-    width: '100%',
-    height: '400px',
-  };
+    const toggleLabels = () => {
+        setShowLabels(!showLabels)
+    };
 
-  const center = {
-    lat: 37.7749, // Example latitude (San Francisco)
-    lng: -122.4194, // Example longitude (San Francisco)
-  };
-  var Mapclick = function (event) {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
-    console.log(lat)
-  }
-    return (
-      <div>
-      {isVisible ? (
-      
-        <LoadScript googleMapsApiKey={stringKey}>
-          <GoogleMap
-            mapContainerStyle={{
-              width: '100%',
-              height: '85vh',
-              }}
-            center={center}
-            zoom={19}
-            onClick= {ev => {
-              Mapclick(ev)
-            }}
-            >           
-      
-        
-          </GoogleMap>
-        </LoadScript>
-      ) : (
-        <h1></h1>
-      )}
-      </div>
-    );
+    const mapStylesWithoutLabels = [
+        {
+          featureType: 'all',
+          elementType: 'labels',
+          stylers: [{ visibility: 'off' }]
+        }
+      ];
+
+      const mapStylesWithLabel = []; //for clarity
+
+    return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <Map 
+        style = {{width: '100vw', height: '100vh'}}
+        defaultCenter={{lat:22.54992, lng:0}}
+        defaultZoom={3}
+        gestureHandling={'greedy'}
+        disableDefaultUI={true}
+        mapTypeId={'hybrid'}
+        zoomControl={true}
+        fullscreenControl={true}
+        styles={showLabels ? mapStylesWithLabel : mapStylesWithoutLabels}
+        onClick={ev => mapClickEvent(ev)}>
+            <MapControl position={ControlPosition.TOP}>
+                <button onClick={toggleLabels}>Toggle Labels</button>
+            </MapControl>
+        </Map>
+    </APIProvider>
 };
 
 export default MapComp;

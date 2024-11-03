@@ -1,0 +1,24 @@
+.multiCropHolder {
+    width: 99%;
+    margin: 0% 0.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 25px;
+}
+.cropHolder {
+    width: 250px;
+    height: 400px;
+    text-align: center;
+    background-color: rgb(196, 172, 120);
+    border-radius: 10px;
+    border: 1px solid rgb(169, 149, 104);
+}
+.cropHolder p {
+    margin-top: 10px;
+    font-size: 25px;
+}
+.cropHolder img {
+    width: 240px;
+}

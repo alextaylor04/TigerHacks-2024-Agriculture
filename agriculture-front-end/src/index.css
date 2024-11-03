@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.Home-Icon {
+  background-color: grey;
+  padding: 3px;
+  border-radius: 5px;
+}
+.home-flex {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: lightblue;
+}
+
