@@ -5,7 +5,6 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
     const [showLabels, setShowLabels] = useState(true);
     const [typeValue, setTypeValue] = useState("hybrid");
 
-    // change mapTypeId from satellite to hybrid
 
     const mapClickEvent = (ev) => {
         console.log(ev)
