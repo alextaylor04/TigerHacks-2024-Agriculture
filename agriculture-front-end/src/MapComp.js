@@ -15,27 +15,6 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
         updateLong(lng);
         console.log(lat)
         console.log(lng)
-
-        const locationData = {
-            latitude: lat,
-            longitude: lng,
-            fertilizer: 1
-        };
-
-        try {
-            const response = await fetch('/api/location', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(locationData),
-            });
-
-            const result = await response.json();
-            console.log(result); // Handle the response from the server
-        } catch (error) {
-            console.error('Error sending location:', error);
-        }
     };
 
     const toggleLabels = () => {

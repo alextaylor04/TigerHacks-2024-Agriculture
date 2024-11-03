@@ -3,13 +3,22 @@ from ph_api import ph
 from weather_apis import weather
 import crop_recommender_nn as recommender
 
-def prediction(lat,lon, fertilizer):
+def raw_api_data(lat, lon, fertilizer):
     nitrogen, phosporus, potassium = npk(fertilizer)
     ph_ = ph(lat,lon)
     temp, humidity, precipitation = weather(lat,lon)
-    # pre1, pre2, pre3 = "corn", "wheat", "random"
+
     if ph_ == None:
         ph_ = (nitrogen * .1) + (phosporus * .05) + 6 # Nitrogen affects ph more than phosporus. There needs to be a baseline.
+    return [nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation]
+def raw_to_dict(data):
+    labels = ['nitrogen', 'phosphorous', 'potassium', 'temp', 'humidity', 'ph', 'precipitation']
+    dictionary = dict(zip(labels, data))
+    dictionary['temp'] = (dictionary['temp'] * 9 / 5) + 32 #convert to fahrenheit
+    return dictionary
+
+
+def prediction(lat,lon, fertilizer):
 
     # In order
     #print(nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation)
@@ -17,7 +26,7 @@ def prediction(lat,lon, fertilizer):
     # print(pre2)
     # print(pre3)
 
-    data = [nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation]
+    data = raw_api_data(lat, lon, fertilizer)
     return recommender.predict_crop(data)
 
      #, pre1, pre2, pre3
