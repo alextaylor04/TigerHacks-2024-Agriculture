@@ -8,6 +8,9 @@ const Crops = ({aiData, updateaiData}) => {
     const goToHome = () => {
         navigate('/', { state: { reload: true } });
       };
+      window.onload = function () {
+        updateaiData(0);
+      }
     const [plant1, updateP1] = useState('');
     const [plant2, updateP2] = useState('');
     const [plant3, updateP3] = useState('');
@@ -47,7 +50,9 @@ const Crops = ({aiData, updateaiData}) => {
         updateA3P3("Apple trees generally begin producing fruit 3 to 5 years after planting, depending on the variety and rootstock. A mature apple tree can yield between 150 to 300 apples per season, with some high-density orchards producing even more. Harvest time varies by variety, but apples are typically picked in late summer to fall, once they reach their desired color and ripeness.");
       };
 
-    return (<div className = "everything">
+    return (
+    <>
+    {aiData != 0 ? (<div className = "everything">
         <div className="Home-Icon" onClick={goToHome}>Home</div>
         <h1>Three Optimized Crops:</h1>
         <div className='multiCropHolder'>
@@ -82,7 +87,12 @@ const Crops = ({aiData, updateaiData}) => {
                 <p className = "text" >&emsp;{a3p3}</p>
             </div>
         </div>
-    </div>);
+    </div>
+    ) : (
+        <div>error </div>
+    )} 
+    </>
+    );
 }
 
 export default Crops;
