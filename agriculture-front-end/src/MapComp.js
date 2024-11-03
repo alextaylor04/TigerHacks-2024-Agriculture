@@ -52,8 +52,8 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong, updateOnClick}) =>
         fullscreenControl={true}
         styles={showLabels ? mapStylesWithLabel : mapStylesWithoutLabels}
         onClick={ev => mapClickEvent(ev)}>
-            <MapControl position={ControlPosition.TOP}>
-                <button onClick={toggleLabels}>Toggle Labels</button>
+            <MapControl position={ControlPosition.TOP_LEFT}>
+                <button className="customButton" style={{"marginLeft": "5px", "marginTop": "5px", "width": "100px", "height": "30px", "fontSize": "13px", "border": "none", "borderRadius": "2px", "color": "#666666"}} onClick={toggleLabels}>Toggle Labels</button>
             </MapControl>
             {markerPosition && ( // Render marker only if markerPosition is set
           <Marker position={markerPosition} />
