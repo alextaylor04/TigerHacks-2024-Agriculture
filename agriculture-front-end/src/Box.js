@@ -19,6 +19,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
   const [dataDis, updateDataDis] = useState('d-none');
   const [stageOneDis, updatestageOneDis] = useState('');
+  const [lastStageDis, updateLastStageDis] = useState('d-none');
   const [coordMargin, updateCoordMargin] = useState('50px');
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
@@ -27,16 +28,34 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
   };
-  // window.onload = (event) => {
-  //   updateTemp(infoJSON["Temp"]);
-  //   updateRain(infoJSON["Rain"]);
-  //   updateHum(infoJSON["Hum"]);
-  //   updatePh(infoJSON["Ph"]);
-  //   updateNit(infoJSON["Nit"]);
-  //   updatePosp(infoJSON["Posp"]);
-  //   updatePot(infoJSON["Pot"]);
-  // };
-  // do checks here
+  var sumbitPhase = function () {
+    updateDataDis('');
+    updatestageOneDis('d-none');
+    updateImgDis('d-none');
+    updateLoadingState('');
+  }
+  var finishLoading = function () {
+    updateLoadingState('d-none');
+    updateLastStageDis('');
+  }
+  var oldSubmit = function () {
+    updateTemp(infoJSON["Temp"]);
+    updateRain(infoJSON["Rain"]);
+    updateHum(infoJSON["Hum"]);
+    updatePh(infoJSON["Ph"]);
+    updateNit(infoJSON["Nit"]);
+    updatePhosp(infoJSON["Posp"]);
+    updatePot(infoJSON["Pot"]);
+    sumbitPhase();
+
+    var test = setTimeout(finishLoading, 2000);
+  }
+  var movingToCropsSetup = function () {
+    // update values somehow
+    updateaiData(1);
+    goToCrops();
+  }
+
   var submitCoords = async function () {
 
     const locationData = {
@@ -68,7 +87,6 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   } catch (error) {
       console.error('Error sending location:', error);
   }
-  var test = setTimeout(goToCrops, 2000);
 }
   
   
@@ -128,7 +146,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
           <li className="list-group-item">Potassium (K): {Pot}%</li>
         </ul>
         <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
-        <button className={"submit " + stageOneDis} id="submit" onClick={submitCoords}>Submit Coords</button>
+        <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">
@@ -139,6 +157,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
             ></l-bouncy>
           </div>
         </div>
+        <button class={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
       </div>
       );
 }
