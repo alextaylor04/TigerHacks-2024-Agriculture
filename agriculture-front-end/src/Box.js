@@ -7,7 +7,7 @@ import { bouncy } from 'ldrs';
 
 
 
-const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
+const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) => {
   const navigate = useNavigate();
   const [Temp, updateTemp] = useState('');
   const [Rainfall, updateRain] = useState('');
@@ -24,10 +24,32 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
-  const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); // ./Images/51sHm3pQHL._AC.png
+
+  var listGroupColor = "lightgreen";
+  var listGroupBorderColor = "darkgreen";
+  const [buttonColor, updateButtonColor] = useState("lightgrey");
+  const [buttonBorder, updateButtonBorder] = useState("grey");
+
+  
+  const [mapClickStatus, updateMapClickStatus] = useState(-1);
+  const [buttonStatus, updateButtonStatus] = useState(-1);
+  const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); 
   const goToCrops = () => {
-    navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
+    navigate('/Crops', { state: { userId: 123 } }); 
   };
+  var changeButton = function () {
+    updateButtonStatus(1);
+    updateButtonColor("lightgreen");
+    updateButtonBorder("darkgreen");
+  }
+  useEffect(() => {
+    if (effect) {
+      updateMapClickStatus(1);
+      if (fertValue != -1) {
+        changeButton();
+      }
+    }
+  }, [effect]);
   var sumbitPhase = function () {
     updateDataDis('');
     updatestageOneDis('d-none');
@@ -39,18 +61,32 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
     updateLastStageDis('');
   }
   var movingToCropsSetup = function () {
-    // update values somehow
+    updateaiData(1);
     goToCrops();
   }
+  var oldSubmit = function () {
+    if (buttonStatus === 1) {
+      updateTemp(Math.round(infoJSON["Temp"] * 10) / 10);
+      updateRain(infoJSON["Rain"]);
+      updateHum(infoJSON["Hum"]);
+      updatePh(infoJSON["Ph"]);
+      updateNit(infoJSON["Nit"]);
+      updatePhosp(infoJSON["Posp"]);
+      updatePot(infoJSON["Pot"]);
+      sumbitPhase();
 
-  var submitCoords = async function () {
-    sumbitPhase();
-    const locationData = {
-      latitude: lat,
-      longitude: long,
-      fertilizer: fertValue
-    };
+      var test = setTimeout(finishLoading, 2000);
+    }
+  }
 
+var submitCoords = async function () {
+  if (buttonStatus === 1) {
+      sumbitPhase();
+      const locationData = {
+        latitude: lat,
+        longitude: long,
+        fertilizer: fertValue
+      };
     
   try {
       const response = await fetch('http://127.0.0.1:5000/api/data', {
@@ -60,21 +96,29 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
           },
           body: JSON.stringify(locationData),
       });
+        
+      try {
+          const response = await fetch('/api/data', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(locationData),
+          });
 
-      const result = await response.json();
-      updateTemp(result['temp'])
-      updateRain(result['precipitation'])
-      updateHum(result['humidity'])
-      updatePh(result['ph'])
-      updateNit(result['nitrogen'])
-      updatePhosp(result['phosphorous'])
-      updatePot(result['potassium'])
+          const result = await response.json();
+          updateTemp(Math.round(result['temp'] * 10) / 10)
+          updateRain(result['precipitation'])
+          updateHum(result['humidity'])
+          updatePh(result['ph'])
+          updateNit(result['nitrogen'])
+          updatePhosp(result['phosphorous'])
+          updatePot(result['potassium'])
 
-       // Handle the response from the server
-  } catch (error) {
-      console.error('Error sending location:', error);
-  }
-
+          // Handle the response from the server
+      } catch (error) {
+          console.error('Error sending location:', error);
+      }
 try {
     const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
         method: 'POST',
@@ -84,15 +128,24 @@ try {
         body: JSON.stringify(locationData),
     });
 
-    const result = await response.json();
-    updateaiData(result);
-    finishLoading();
-    
-} catch (error) {
-    console.error('Error sending location:', error);
-}
+    try {
+        const response = await fetch('/api/pred/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(locationData),
+        });
 
+        const result = await response.json();
+        updateaiData(result);
+        finishLoading();
+        
+    } catch (error) {
+        console.error('Error sending location:', error);
+    }
 
+  }
 }
   
   
@@ -120,6 +173,9 @@ try {
       updateImgDis('');
       updateMyImage(selString);
       updateFertValue(selValue);
+      if (mapClickStatus === 1) {
+        changeButton();
+      }
     }
   }
 
@@ -142,23 +198,23 @@ try {
         </select>
         <img src={myImage} className={"imgPlace " + imgDis}></img>
         <ul className={"list-group " + dataDis}>
-          <li className="list-group-item">Temperature: {Temp} °F</li>
-          <li className="list-group-item">Rainfall: {Rainfall} mm</li>
-          <li className="list-group-item">Humidity: {Humidity}</li>
-          <li className="list-group-item">Ph: {Ph}</li>
-          <li className="list-group-item">Nitrogen (N): {Nit}%</li>
-          <li className="list-group-item">Phosphorus (P): {Phosp}%</li>
-          <li className="list-group-item">Potassium (K): {Pot}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Temperature: {Temp} °F</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Rainfall: {Rainfall} mm</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Humidity: {Humidity}</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Ph: {Ph}</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Nitrogen (N): {Nit}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Phosphorus (P): {Phosp}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Potassium (K): {Pot}%</li>
         </ul>
-        <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
-        <button className={"submit " + stageOneDis} id="submit" onClick={submitCoords}>Submit Coords</button>
+        <p className="CoordHolder" style={{"marginTop": coordMargin}}>Latitude : {Math.round(lat * 10000) / 10000}     Longitude: {Math.round(long * 10000) / 10000}</p>
+        <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit} style={{"backgroundColor": buttonColor, "borderColor": buttonBorder}}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">
           <l-bouncy
             size="35"
             speed="1.75" 
-            color="black" 
+            color="white" 
             ></l-bouncy>
           </div>
         </div>
