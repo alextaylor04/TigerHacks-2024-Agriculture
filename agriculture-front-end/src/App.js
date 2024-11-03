@@ -2,9 +2,12 @@ import React from 'react';
 import Box from './Box';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import Crops from './Crops';
-import MapComp from './MapComp';
+import MapComp from './MapComp'
+import {useState} from 'react';
 
 const App = () => {
+  const [lat, updateLat] = useState(0);
+  const [long, updateLong] = useState(0);
     return (
       <div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -14,8 +17,8 @@ const App = () => {
             <Route index element={
               <>
                 <div className="home-flex">
-                  <MapComp></MapComp>
-                  <Box></Box>
+                  <MapComp lat={lat} updateLat={updateLat} long={long} updateLong={updateLong}></MapComp>
+                  <Box lat={lat} updateLat={updateLat} long={long} updateLong={updateLong}></Box>
                 </div>
               </>
               }></Route>

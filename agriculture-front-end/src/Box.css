@@ -1,10 +1,44 @@
 .leftSidebar {
   
-    width: 50%;
+    width: 40%;
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .list-group {
+    align-items: center;
+}
+.list-group {
     text-align: center;
-  }
+    width:100%;
+}
+.fertilizer {
+    margin-top: 20px;
+}
+.form-select {
+    margin-top: -5px;
+}
+.Loading {
+    margin-top: 150px;
+    display: flex;
+    gap: 5px;
+    font-size: 25px;
+    font-weight:700;
+}
+.test {
+    margin-top: 5px;
+}
+.submit {
+    padding: 0;
+    margin-top: 20px;
+    width: 50%;
+    height: 45px;
+    background-color: lightgreen;
+    border-color: darkgreen;
+    border-radius: 8px;
+}
+.submit:hover {
+    background-color: rgb(128, 227, 128);
+}
+.imgPlace {
+    width: 300px;
+    margin-top: 30px;
+}
