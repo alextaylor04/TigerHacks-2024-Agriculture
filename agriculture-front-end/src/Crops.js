@@ -1,16 +1,18 @@
 import React from 'react';
 import './crops.css';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Crops = ({aiData, updateaiData}) => {
+const Crops = ({ aiData, updateaiData }) => {
     const navigate = useNavigate();
     const goToHome = () => {
         navigate('/', { state: { reload: true } });
-      };
-      window.onload = function () {
+    };
+
+    window.onload = function () {
         updateaiData(0);
-      }
+    };
+
     const [plant1, updateP1] = useState('');
     const [plant2, updateP2] = useState('');
     const [plant3, updateP3] = useState('');
@@ -18,7 +20,8 @@ const Crops = ({aiData, updateaiData}) => {
     const [image1, updateI1] = useState('');
     const [image2, updateI2] = useState('');
     const [image3, updateI3] = useState('');
-/*What the variables mean: A#P# = Answer# Part#, answer number refers to the plant number it refers too. */
+
+    /* What the variables mean: A#P# = Answer# Part#, answer number refers to the plant number it refers too. */
     const [a1p1, updateA1P1] = useState('');
     const [a1p2, updateA1P2] = useState('');
     const [a1p3, updateA1P3] = useState('');
@@ -29,9 +32,10 @@ const Crops = ({aiData, updateaiData}) => {
     const [a3p2, updateA3P2] = useState('');
     const [a3p3, updateA3P3] = useState('');
 
-    const [logo, updateMyLogo] = useState(require('./Images/tractor-removebg-preview.png'));     
+    const [logo, updateMyLogo] = useState(require('./Images/tractor-removebg-preview.png'));
+
     useEffect(() => {
-        console.log(aiData)
+        console.log(aiData);
         updateP1(aiData.cropPredictions[0]);
         updateP2(aiData.cropPredictions[1]);
         updateP3(aiData.cropPredictions[2]);
@@ -39,7 +43,7 @@ const Crops = ({aiData, updateaiData}) => {
         updateI1(aiData.prediction_images[0][0]);
         updateI2(aiData.prediction_images[1][0]);
         updateI3(aiData.prediction_images[2][0]);
-        
+
         updateA1P1(aiData.answer1part1);
         updateA1P2(aiData.answer1part2);
         updateA1P3(aiData.answer1part3);
@@ -51,55 +55,54 @@ const Crops = ({aiData, updateaiData}) => {
         updateA3P3(aiData.answer3part3);
     }, []);
 
-    return (<div className = "everything">
-        <div className="Home-Icon" onClick={goToHome}>
-        <img className="logo" src={logo}></img>
-        &emsp;Home
-        </div>
-        <h1 className="optimize">Three AI Optimized Crops:</h1>
     return (
-    <>
-    {aiData != 0 ? (<div className = "everything">
-        <div className="Home-Icon" onClick={goToHome}>Home</div>
-        <h1>Three Optimized Crops:</h1>
-        <div className='multiCropHolder'>
-            <div className="cropHolder">
-                <p className='name'>{plant1}</p>
-                <img className='image' src= {image1}></img>
-                <p className = "heading">Description:</p>
-                <p className = "text" >&emsp;{a1p1}</p>
-                <p className = "heading">Best Growing Conditions:</p>
-                <p className = "text" >&emsp;{a1p2}</p>
-                <p className = "heading">Yield and Harvest Time:</p>
-                <p className = "text" >&emsp;{a1p3}</p>
+        <>
+            <div className="everything">
+                <div className="Home-Icon" onClick={goToHome}>
+                    <img className="logo" src={logo} alt="Home icon" />
+                    &emsp;Home
+                    <h3 className="mainTitle">CropAI</h3>
+                </div>
+                <h1 className="optimize">Three AI Optimized Crops:</h1>
+                {aiData !== 0 ? (
+                    <div className="multiCropHolder">
+                        <div className="cropHolder">
+                            <p className="name">{plant1}</p>
+                            <img className="image" src={image1} alt={'Image not Found'} />
+                            <p className="heading">Description:</p>
+                            <p className="text">&emsp;{a1p1}</p>
+                            <p className="heading">Best Growing Conditions:</p>
+                            <p className="text">&emsp;{a1p2}</p>
+                            <p className="heading">Yield and Harvest Time:</p>
+                            <p className="text">&emsp;{a1p3}</p>
+                        </div>
+                        <div className="cropHolder">
+                            <p className="name">{plant2}</p>
+                            <img className="image" src={image2} alt={'Image not Found'} />
+                            <p className="heading">Description:</p>
+                            <p className="text">&emsp;{a2p1}</p>
+                            <p className="heading">Best Growing Conditions:</p>
+                            <p className="text">&emsp;{a2p2}</p>
+                            <p className="heading">Yield and Harvest Time:</p>
+                            <p className="text">&emsp;{a2p3}</p>
+                        </div>
+                        <div className="cropHolder">
+                            <p className="name">{plant3}</p>
+                            <img className="image" src={image3} alt={'Image not Found'} />
+                            <p className="heading">Description:</p>
+                            <p className="text">&emsp;{a3p1}</p>
+                            <p className="heading">Best Growing Conditions:</p>
+                            <p className="text">&emsp;{a3p2}</p>
+                            <p className="heading">Yield and Harvest Time:</p>
+                            <p className="text">&emsp;{a3p3}</p>
+                        </div>
+                    </div>
+                ) : (
+                    <div>error</div>
+                )}
             </div>
-            <div className="cropHolder">
-            <p className='name'>{plant2}</p>
-                <img className='image' src={image2}></img>
-                <p className = "heading">Description:</p>
-                <p className = "text" >&emsp;{a2p1}</p>
-                <p className = "heading">Best Growing Conditions:</p>
-                <p className = "text" >&emsp;{a2p2}</p>
-                <p className = "heading">Yield and Harvest Time:</p>
-                <p className = "text" >&emsp;{a2p3}</p>
-            </div>
-            <div className="cropHolder">
-            <p className='name'>{plant3}</p>
-                <img className='image' src={image3}></img>
-                <p className = "heading">Description:</p>
-                <p className = "text" >&emsp;{a3p1}</p>
-                <p className = "heading">Best Growing Conditions:</p>
-                <p className = "text" >&emsp;{a3p2}</p>
-                <p className = "heading">Yield and Harvest Time:</p>
-                <p className = "text" >&emsp;{a3p3}</p>
-            </div>
-        </div>
-    </div>
-    ) : (
-        <div>error </div>
-    )} 
-    </>
+        </>
     );
-}
+};
 
 export default Crops;

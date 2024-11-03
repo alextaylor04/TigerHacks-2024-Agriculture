@@ -1,9 +1,10 @@
-import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
+import {APIProvider, Map, ControlPosition, MapControl, Marker} from "@vis.gl/react-google-maps"
 import React, { useState} from 'react';
 
 const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
     const [showLabels, setShowLabels] = useState(true);
     const [typeValue, setTypeValue] = useState("hybrid");
+    const [markerPosition, setMarkerPosition] = useState(null); 
 
 
     const mapClickEvent = async (ev) => {
@@ -11,6 +12,10 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
         const latLng = ev.detail.latLng;
         const lat = latLng.lat;
         const lng = latLng.lng;
+        setMarkerPosition({
+          lat: latLng.lat,
+          lng: latLng.lng,
+        });
         updateLat(lat);
         updateLong(lng);
         console.log(lat)
@@ -51,6 +56,9 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
             <MapControl position={ControlPosition.TOP}>
                 <button onClick={toggleLabels}>Toggle Labels</button>
             </MapControl>
+            {markerPosition && ( // Render marker only if markerPosition is set
+          <Marker position={markerPosition} />
+        )}
         </Map>
     </APIProvider>
 };
