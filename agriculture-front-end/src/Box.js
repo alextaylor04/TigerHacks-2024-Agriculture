@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './Box.css';
 import 'ldrs/ring';
 import { bouncy } from 'ldrs'
-import myImage from './Images/21-0-0_ammonium_sulfate.webp';
+import myImage from './Images/21-0-0_ammonium_sulfate.png';
 
 const Box = ({lat, updateLat, long, updateLong}) => {
   const navigate = useNavigate();
@@ -40,8 +40,8 @@ const Box = ({lat, updateLat, long, updateLong}) => {
     updateLoadingState('');
   }
   
-
   bouncy.register()
+
 
   const [currentTime, setCurrentTime] = useState(0);
     return (
@@ -61,7 +61,7 @@ const Box = ({lat, updateLat, long, updateLong}) => {
           <option value="10">10-10-10</option>
           <option value="11">16-4-8</option>
         </select>
-        <img src={myImage} className={stageOneDis}></img>
+        <img src={myImage} className={"imgPlace " + stageOneDis}></img>
         <ul className={"list-group " + dataDis}>
           <li className="list-group-item">Temperature: {Temp} °F</li>
           <li className="list-group-item">Rainfall: {Rainfall} mm</li>
@@ -76,7 +76,7 @@ const Box = ({lat, updateLat, long, updateLong}) => {
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">
-            <l-bouncy
+          <l-bouncy
             size="35"
             speed="1.75" 
             color="black" 

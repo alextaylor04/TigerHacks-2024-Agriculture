@@ -39,7 +39,7 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
 
     return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <Map 
-        style = {{width: '65%', height: '100vh'}}
+        style = {{width: '60%', height: '100vh'}}
         defaultCenter={{lat:39.03010135948161, lng:-93.2481203134825}}
         defaultZoom={4}
         gestureHandling={'greedy'}

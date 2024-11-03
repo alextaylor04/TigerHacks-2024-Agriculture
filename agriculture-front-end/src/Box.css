@@ -38,7 +38,7 @@
 .submit:hover {
     background-color: rgb(128, 227, 128);
 }
-img {
+.imgPlace {
     width: 300px;
     margin-top: 30px;
 }
