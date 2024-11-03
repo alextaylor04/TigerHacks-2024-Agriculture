@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Crop AI",
+  "name": "Find the best crop to plant on your land",
   "icons": [
     {
       "src": "favicon.ico",

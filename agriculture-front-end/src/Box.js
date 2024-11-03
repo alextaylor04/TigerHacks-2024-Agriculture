@@ -88,7 +88,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
           fertilizer: fertValue
         };
   
-          
+        //ChatGPT was used a little here just to see how fetch requests work with Flask, then was adapted to our codebase
         try {
             const response = await fetch('/api/data', {
                 method: 'POST',
@@ -100,14 +100,13 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   
             const result = await response.json();
             updateTemp(Math.round(result['temp'] * 10) / 10)
-            updateRain(result['precipitation'])
-            updateHum(result['humidity'])
-            updatePh(result['ph'])
+            updateRain(Math.round(result['precipitation'] * 10) / 10)
+            updateHum(Math.round(result['humidity'] * 10) / 10)
+            updatePh(Math.round(result['ph'] * 10) / 10)
             updateNit(result['nitrogen'])
             updatePhosp(result['phosphorous'])
             updatePot(result['potassium'])
   
-            // Handle the response from the server
         } catch (error) {
             console.error('Error sending location:', error);
         }
@@ -206,7 +205,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
             ></l-bouncy>
           </div>
         </div>
-        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crops</button>
       </div>
       );
 }

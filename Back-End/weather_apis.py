@@ -4,12 +4,8 @@ import requests_cache
 import pandas as pd
 from retry_requests import retry
 
-def weather(lat, lon): # Returns Temperature, Humidity, and Yearly Rainfall in that order.
-	# Setup the Open-Meteo API client with cache and retry on error
-	cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
-	retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
-	openmeteo = openmeteo_requests.Client(session = retry_session)
-def weather(lat, lon): # Returns Temperature, Humidity, and Yearly Rainfall in that order.
+#ChatGPT was used in a few places here to help convert the units, the OpenMeteo website generated some of this code to fit our requirements.
+def weather(lat, lon): 
 	# Setup the Open-Meteo API client with cache and retry on error
 	cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 	retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
@@ -40,16 +36,9 @@ def weather(lat, lon): # Returns Temperature, Humidity, and Yearly Rainfall in t
 
 	# Process first location. Add a for-loop for multiple locations or weather models
 	response = responses[0]
-	# print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-	# print(f"Elevation {response.Elevation()} m asl")
-	# print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-	# print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
+
 	# Process first location. Add a for-loop for multiple locations or weather models
 	response = responses[0]
-	# print(f"Coordinates {response.Latitude()}°N {response.Longitude()}°E")
-	# print(f"Elevation {response.Elevation()} m asl")
-	# print(f"Timezone {response.Timezone()} {response.TimezoneAbbreviation()}")
-	# print(f"Timezone difference to GMT+0 {response.UtcOffsetSeconds()} s")
 
 	# Process hourly data. The order of variables needs to be the same as requested.
 	hourly = response.Hourly()
@@ -82,15 +71,9 @@ def weather(lat, lon): # Returns Temperature, Humidity, and Yearly Rainfall in t
 	hourly_data["precipitation"] = hourly_precipitation
 
 	hourly_dataframe = pd.DataFrame(data = hourly_data)
-	# print(hourly_dataframe)
 	hourly_dataframe = pd.DataFrame(data = hourly_data)
-	# print(hourly_dataframe)
-	# print(hourly_dataframe['temperature_2m'].head(1000))
 	mean_temperature_2m = hourly_dataframe["temperature_2m"].mean()
 	mean_relative_humidity_2m = hourly_dataframe["relative_humidity_2m"].mean()
 	total_precipitation = hourly_dataframe["precipitation"].sum()
 	yearly_precipitation = total_precipitation * 6
-	# print(mean_temperature_2m)
-	# print(mean_relative_humidity_2m)
-	# print(yearly_precipitation)
 	return float(mean_temperature_2m), float(mean_relative_humidity_2m), float(yearly_precipitation)
