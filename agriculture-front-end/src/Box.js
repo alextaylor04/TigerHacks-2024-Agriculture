@@ -38,26 +38,13 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
     updateLoadingState('d-none');
     updateLastStageDis('');
   }
-  var oldSubmit = function () {
-    updateTemp(infoJSON["Temp"]);
-    updateRain(infoJSON["Rain"]);
-    updateHum(infoJSON["Hum"]);
-    updatePh(infoJSON["Ph"]);
-    updateNit(infoJSON["Nit"]);
-    updatePhosp(infoJSON["Posp"]);
-    updatePot(infoJSON["Pot"]);
-    sumbitPhase();
-
-    var test = setTimeout(finishLoading, 2000);
-  }
   var movingToCropsSetup = function () {
     // update values somehow
-    updateaiData(1);
     goToCrops();
   }
 
   var submitCoords = async function () {
-
+    sumbitPhase();
     const locationData = {
       latitude: lat,
       longitude: long,
@@ -98,9 +85,8 @@ try {
     });
 
     const result = await response.json();
-    console.log(result);
-    updateaiData('test');
-    goToCrops();
+    updateaiData(result);
+    finishLoading();
     
 } catch (error) {
     console.error('Error sending location:', error);
@@ -165,7 +151,7 @@ try {
           <li className="list-group-item">Potassium (K): {Pot}%</li>
         </ul>
         <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
-        <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit}>Submit Coords</button>
+        <button className={"submit " + stageOneDis} id="submit" onClick={submitCoords}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">
@@ -176,7 +162,7 @@ try {
             ></l-bouncy>
           </div>
         </div>
-        <button class={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
       </div>
       );
 }
