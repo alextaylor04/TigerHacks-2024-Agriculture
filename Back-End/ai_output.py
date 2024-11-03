@@ -43,6 +43,7 @@ def crop_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfal
         messages = [
             {"role": "user", "content": provide_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rainfall, N, P, K)}],
     ).choices[0].message.content
+    print(resp)
     answer1 = resp.split('*')[0]
     answer2 = resp.split('*')[1]
     answer3 = resp.split('*')[2]
@@ -79,9 +80,9 @@ def provide_description(pre1, pre2, gpt_pred, lat, lon, temp, humidity, ph, rain
         "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN\n"
         "When should we harvest each of these crops?\n"
         "How much of this crop should we expect to harvest each season?\n"
-        "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN . END IN * Similar to this format:\n"
-        "why we choose crop1 in 3 sentences| why we choose crop2 in 3 sentences| why you choose crop3 in 3 sentences\n"
-        "best growing conditions for crop1|best growing conditions for crop2|best growing conditions for crop3\n"
+        "PROVIDE 3 PARAGRAPHS, 1 FOR EACH CROP, 3 SENTENCES. SEPARATE WITH | AS A DELIMITER. END IN . END IN * AFTER EVERY 3 PARAGRAPHS. Similar to this format:\n"
+        "why we choose crop1 in 3 sentences| why we choose crop2 in 3 sentences| why you choose crop3 in 3 sentences*\n"
+        "best growing conditions for crop1|best growing conditions for crop2|best growing conditions for crop3*\n"
         "what is the best time to harvest and expected harvest of crop1|what is the best time to harvest and expected harvest of crop2|what is the best time to harvest and expected harvest of crop3*\n"
         "NO HEADERS"
     )

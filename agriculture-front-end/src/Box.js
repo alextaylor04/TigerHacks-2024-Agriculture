@@ -66,18 +66,38 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   } catch (error) {
       console.error('Error sending location:', error);
   }
+
+try {
+    const response = await fetch('/api/pred/data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationData),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    updateaiData('test');
+    goToCrops();
+    
+} catch (error) {
+    console.error('Error sending location:', error);
+}
+
+
 }
   
-  var submitCoords = function () {
-    // // do checks here
-    // updateDataDis("");
-    // updatestageOneDis("d-none");
-    // updateCoordMargin("30px");
-    // updateLoadingState('');
-    // updateImgDis('d-none');
-    // updateaiData("bob");
-    // setTimeout(goToCrops, 2000);
-  }
+  // var submitCoords = function () {
+  //   // // do checks here
+  //   // updateDataDis("");
+  //   // updatestageOneDis("d-none");
+  //   // updateCoordMargin("30px");
+  //   // updateLoadingState('');
+  //   // updateImgDis('d-none');
+  //   // updateaiData("bob");
+  //   // setTimeout(goToCrops, 2000);
+  // }
   
   bouncy.register()
   const ImageReq = {

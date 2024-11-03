@@ -27,6 +27,7 @@ const Crops = ({aiData, updateaiData}) => {
     const [a3p3, updateA3P3] = useState('');
 
     window.onload = (event) => {
+        console.log(aiData)
         updateP1("Corn");
         updateP2("Bananas");
         updateP3("Apples");

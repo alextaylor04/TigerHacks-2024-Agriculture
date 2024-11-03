@@ -24,16 +24,17 @@ def api_data():
 
     return jsonify(raw_api_dict)
 
-@app.route('/api/predictiondata', methods=['POST'])
+@app.route('/api/pred/data', methods=['POST'])
 def make_prediction():
     data = request.json  # Get JSON data from the request
     latitude = data.get('latitude')
     longitude = data.get('longitude')
     fertilizer = data.get('fertilizer')
 
-    predictions = apis.prediction(latitude, longitude, fertilizer)
+    prediction_indices = apis.prediction(latitude, longitude, fertilizer)
     cropOrder = ["rice", "maize", "chickpea", "kidneybeans", "pigeonpeas", "mothbeans", "mungbean", "blackgram", "lentil", "pomegranate", "banana", "mango", "grapes", "watermelon", "muskmelon", "apple", "orange", "papaya", "coconut", "cotton", "jute", "coffee"]
-    predictions = cropOrder[predictions]
+    predictions = [cropOrder[i] for i in prediction_indices if i < len(cropOrder)]
+
     
     nitrogen, phosphorous, potassium, temp, humidity, ph, precipitation = tuple(apis.raw_api_data(latitude, longitude, fertilizer))
 
@@ -48,10 +49,17 @@ def make_prediction():
         prediction_images.append(google_image.google_image_search(pred))
     
     labels = ['cropPredictions', 'answer1part1', 'answer1part2', 'answer1part3', 'answer2part1', 'answer2part2', 'answer2part3', 'answer3part1', 'answer3part2', 'answer3part3', 'prediction_images']
-    values = [predictions, crop_desc, prediction_images]
+    values = [predictions]
+    for desc in crop_desc:
+        values.append(desc)
+    values.append(prediction_images)
 
-    dictionary = dict(zip(labels, values))
-    return jsonify(dictionary)
+    resp_data = dict(zip(labels, values))
+    # for key in resp_data.keys():
+    #     print(key)
+    # # print(dictionary)
+
+    return jsonify(resp_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
