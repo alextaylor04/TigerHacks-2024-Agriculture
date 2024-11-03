@@ -11,7 +11,7 @@ def prediction(lat,lon, fertilizer):
         ph_ = (nitrogen * .1) + (phosporus * .05) + 6 # Nitrogen affects ph more than phosporus. There needs to be a baseline.
 
     # In order
-    # print(nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation)
+    print(nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation)
     # print(pre1)
     # print(pre2)
     # print(pre3)
