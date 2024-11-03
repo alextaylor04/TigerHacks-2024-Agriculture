@@ -7,7 +7,7 @@ import { bouncy } from 'ldrs';
 
 
 
-const Box = ({lat, updateLat, long, updateLong}) => {
+const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const navigate = useNavigate();
   const [Temp, updateTemp] = useState('');
   const [Rainfall, updateRain] = useState('');
@@ -36,7 +36,6 @@ const Box = ({lat, updateLat, long, updateLong}) => {
     updatePosp(infoJSON["Posp"]);
     updatePot(infoJSON["Pot"]);
   };
-  
   var submitCoords = function () {
     // do checks here
     updateDataDis("");
@@ -44,6 +43,8 @@ const Box = ({lat, updateLat, long, updateLong}) => {
     updateCoordMargin("30px");
     updateLoadingState('');
     updateImgDis('d-none');
+    updateaiData("bob");
+    setTimeout(goToCrops, 2000);
   }
   
   bouncy.register()

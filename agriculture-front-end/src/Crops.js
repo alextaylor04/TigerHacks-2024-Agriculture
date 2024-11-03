@@ -2,7 +2,7 @@ import React from 'react';
 import './crops.css';
 import { useNavigate } from 'react-router-dom';
 
-const Crops = () => {
+const Crops = ({aiData, updateaiData}) => {
     const navigate = useNavigate();
     const goToHome = () => {
         navigate('/', { state: { reload: true } });
@@ -17,7 +17,7 @@ const Crops = () => {
                 <img src="https://i.ytimg.com/vi/1VbZE6YhjKk/maxresdefault.jpg"></img>
             </div>
             <div className="cropHolder">
-                <p>Corn</p>
+                <p>Corn {aiData}</p>
                 <img src="https://i.ytimg.com/vi/1VbZE6YhjKk/maxresdefault.jpg"></img>
             </div>
         </div>
