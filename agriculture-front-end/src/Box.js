@@ -3,10 +3,11 @@ import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Box.css';
 import 'ldrs/ring';
-import { bouncy } from 'ldrs'
-import myImage from './Images/21-0-0_ammonium_sulfate.png';
+import { bouncy } from 'ldrs';
 
-const Box = ({lat, updateLat, long, updateLong}) => {
+
+
+const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const navigate = useNavigate();
   const [Temp, updateTemp] = useState('');
   const [Rainfall, updateRain] = useState('');
@@ -15,13 +16,15 @@ const Box = ({lat, updateLat, long, updateLong}) => {
   const [Nit, updateNit] = useState('');
   const [Phosp, updatePhosp] = useState('');
   const [Pot, updatePot] = useState('');
-  var infoJSON = {"Temp": 70, "Rain": 126.0, "Hum": 42.0, "Ph": 9.6, "Nit": 12.4, "Posp": 12.6, "Pot": 12.2};
+  var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
   const [dataDis, updateDataDis] = useState('d-none');
   const [stageOneDis, updatestageOneDis] = useState('');
   const [coordMargin, updateCoordMargin] = useState('50px');
   const [LoadingState, updateLoadingState] = useState('d-none');
+  const [imgDis, updateImgDis] = useState('d-none'); 
+  const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); // ./Images/51sHm3pQHL._AC.png
   const goToCrops = () => {
-    navigate('/Crops', { state: { userId: 123 } });
+    navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
   };
   // window.onload = (event) => {
   //   updateTemp(infoJSON["Temp"]);
@@ -39,7 +42,7 @@ const Box = ({lat, updateLat, long, updateLong}) => {
       latitude: lat,
       longitude: long,
       fertilizer: 1
-  };
+    };
 
   try {
       const response = await fetch('/api/data', {
@@ -63,19 +66,49 @@ const Box = ({lat, updateLat, long, updateLong}) => {
   } catch (error) {
       console.error('Error sending location:', error);
   }
-
-    updateDataDis("");
-    updatestageOneDis("d-none");
-    updateCoordMargin("30px");
-    updateLoadingState('');
+}
+  
+  var submitCoords = function () {
+    // // do checks here
+    // updateDataDis("");
+    // updatestageOneDis("d-none");
+    // updateCoordMargin("30px");
+    // updateLoadingState('');
+    // updateImgDis('d-none');
+    // updateaiData("bob");
+    // setTimeout(goToCrops, 2000);
   }
   
   bouncy.register()
+  const ImageReq = {
+    a:  require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    b: require('./Images/9k-removebg-preview.png'),
+    c: require('./Images/21-0-0_ammonium_sulfate-removebg-preview.png'),
+    d: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    e: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    f: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    g: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    h: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    i: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    j: require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    k: require('./Images/51sHm3pQHL._AC_-removebg-preview.png')
+  }
+  var valList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
+  var pastValue = -1;
+  var changeSelect = function (event) {
+    var selValue = event.target.value
+    if (selValue != pastValue) {
+      pastValue = selValue;
+      let selString = ImageReq[valList[selValue - 1]];
+      updateImgDis('');
+      updateMyImage(selString);
+    }
+  }
 
     return (
       <div className="leftSidebar">
         <p className={"fertilizer " + stageOneDis}>Select Fertilizer</p>
-        <select className={"form-select " + stageOneDis} style={{"width": "280px"}} aria-label="Default select example">
+        <select className={"form-select " + stageOneDis} onChange={changeSelect} style={{"width": "280px"}} aria-label="Default select example">
           <option defaultValue>Select</option>
           <option value="1">Urea</option>
           <option value="2">Ammonium Nitrate</option>
@@ -89,7 +122,7 @@ const Box = ({lat, updateLat, long, updateLong}) => {
           <option value="10">10-10-10</option>
           <option value="11">16-4-8</option>
         </select>
-        <img src={myImage} className={"imgPlace " + stageOneDis}></img>
+        <img src={myImage} className={"imgPlace " + imgDis}></img>
         <ul className={"list-group " + dataDis}>
           <li className="list-group-item">Temperature: {Temp} °F</li>
           <li className="list-group-item">Rainfall: {Rainfall} mm</li>

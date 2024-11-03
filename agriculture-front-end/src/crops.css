@@ -1,19 +1,24 @@
+.everything {
+    background-color:#212121;
+    width: 100%;
+    color:aliceblue;
+    font-family: 'Verdana', sans-serif;
+}
 .multiCropHolder {
     width: 99%;
     margin: 0% 0.5%;
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     flex-direction: row;
-    gap: 25px;
+    gap: 30px;
 }
 .cropHolder {
-    width: 250px;
-    height: 400px;
+    width: 270px;
     text-align: center;
-    background-color: rgb(196, 172, 120);
+    background-color: #1aa64b;
     border-radius: 10px;
-    border: 1px solid rgb(169, 149, 104);
+    border: 1px solid rgb(0, 0, 0);
 }
 .cropHolder p {
     margin-top: 10px;
@@ -21,4 +26,12 @@
 }
 .cropHolder img {
     width: 240px;
+}
+.cropHolder .text {
+    font-size: 15px;
+    text-align: left;
+}
+img{
+    height: 200px;
+    width: auto;
 }
