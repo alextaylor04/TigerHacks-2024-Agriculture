@@ -49,13 +49,19 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   
   bouncy.register()
   const ImageReq = {
-    a:  require('./Images/51sHm3pQHL._AC_.png'),
-    b: require('./Images/51sHm3pQHL._AC_.png'),
-    c: require('./Images/51sHm3pQHL._AC_.png'),
+    a:  require('./Images/51sHm3pQHL._AC_-removebg-preview.png'),
+    b: require('./Images/9k-removebg-preview.png'),
+    c: require('./Images/21-0-0_ammonium_sulfate-removebg-preview.png'),
     d: require('./Images/51sHm3pQHL._AC_.png'),
-    e: require('./Images/51sHm3pQHL._AC_.png')
+    e: require('./Images/51sHm3pQHL._AC_.png'),
+    f: require('./Images/51sHm3pQHL._AC_.png'),
+    g: require('./Images/51sHm3pQHL._AC_.png'),
+    h: require('./Images/51sHm3pQHL._AC_.png'),
+    i: require('./Images/51sHm3pQHL._AC_.png'),
+    j: require('./Images/51sHm3pQHL._AC_.png'),
+    k: require('./Images/51sHm3pQHL._AC_.png')
   }
-  var valList = ['a', 'b', 'c', 'd', 'e'];
+  var valList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
   var pastValue = -1;
   var changeSelect = function (event) {
     var selValue = event.target.value
