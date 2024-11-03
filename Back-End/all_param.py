@@ -18,7 +18,7 @@ def prediction(lat,lon, fertilizer):
 
     return nitrogen, phosporus, potassium, temp, humidity, ph_, precipitation#, pre1, pre2, pre3
 
-prediction(39.099724, -94.578331, 1)
+print(prediction(39.099724, -94.578331, 1))
 # prediction(38, -94, 2)
 # prediction(37, -93, 3)
 # prediction(37, -94, 4)

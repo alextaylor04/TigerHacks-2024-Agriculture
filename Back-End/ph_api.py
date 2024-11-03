@@ -35,4 +35,4 @@ def ph(lat, lon):
                 soil_data = response.json()
                 ph_value_raw = soil_data['properties']['layers'][0]['depths'][0]['values']['mean']
                 ph_value = ph_value_raw / 10
-                return ph_value
+                return float(ph_value)
