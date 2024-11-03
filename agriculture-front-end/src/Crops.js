@@ -3,7 +3,7 @@ import './crops.css';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Crops = () => {
+const Crops = ({aiData, updateaiData}) => {
     const navigate = useNavigate();
     const goToHome = () => {
         navigate('/', { state: { reload: true } });
