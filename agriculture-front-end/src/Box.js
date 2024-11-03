@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Box.css';
 
-const Box = () => {
+const Box = ({lat, updateLat, long, updateLong}) => {
   const navigate = useNavigate();
   const [Temp, updateTemp] = useState('');
   const [Rainfall, updateRain] = useState('');
@@ -25,6 +25,9 @@ const Box = () => {
     updatePosp(infoJSON["Posp"]);
     updatePot(infoJSON["Pot"]);
   };
+  var submitCoords = function () {
+    console.log("test");
+  }
   const [currentTime, setCurrentTime] = useState(0);
   // useEffect(() => {
   //   fetch('/time').then(res => res.json()).then(data => {
@@ -43,7 +46,8 @@ const Box = () => {
           <li className="list-group-item">Phosphorus (P): {Posp}%</li>
           <li className="list-group-item">Potassium (K): {Pot}%</li>
         </ul>
-        <p>test</p>
+        <p>Longitute: {long}   Latitude: {lat}</p>
+        <button className="submit" id="submit" onClick={submitCoords}>Submit Coords</button>
       </div>
       );
 }

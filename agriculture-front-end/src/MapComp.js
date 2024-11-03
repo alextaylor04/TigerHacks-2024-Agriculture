@@ -1,20 +1,29 @@
 import {APIProvider, Map, ControlPosition, MapControl} from "@vis.gl/react-google-maps"
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 
-const MapComp = () => {
+const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
     const [showLabels, setShowLabels] = useState(true);
+    const [typeValue, setTypeValue] = useState("hybrid");
+
+    // change mapTypeId from satellite to hybrid
 
     const mapClickEvent = (ev) => {
         console.log(ev)
         const latLng = ev.detail.latLng;
         const lat = latLng.lat;
         const lng = latLng.lng;
+        updateLat(lat);
         console.log(lat)
         console.log(lng)
     };
 
     const toggleLabels = () => {
         setShowLabels(!showLabels)
+        if (typeValue == "hybrid") {
+          setTypeValue("satellite");
+        } else {
+          setTypeValue("hybrid");
+        }
     };
 
     const mapStylesWithoutLabels = [
@@ -29,12 +38,12 @@ const MapComp = () => {
 
     return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <Map 
-        style = {{width: '100vw', height: '100vh'}}
+        style = {{width: '65%', height: '100vh'}}
         defaultCenter={{lat:22.54992, lng:0}}
         defaultZoom={3}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
-        mapTypeId={'hybrid'}
+        mapTypeId={typeValue}
         zoomControl={true}
         fullscreenControl={true}
         styles={showLabels ? mapStylesWithLabel : mapStylesWithoutLabels}
