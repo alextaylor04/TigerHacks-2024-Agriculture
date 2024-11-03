@@ -24,8 +24,13 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
+
+  var listGroupColor = "lightgreen";
+  var listGroupBorderColor = "darkgreen";
   const [buttonColor, updateButtonColor] = useState("lightgrey");
   const [buttonBorder, updateButtonBorder] = useState("grey");
+
+  
   const [mapClickStatus, updateMapClickStatus] = useState(-1);
   const [buttonStatus, updateButtonStatus] = useState(-1);
   const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); 
@@ -61,7 +66,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   }
   var oldSubmit = function () {
     if (buttonStatus === 1) {
-      updateTemp(infoJSON["Temp"]);
+      updateTemp(Math.round(infoJSON["Temp"] * 10) / 10);
       updateRain(infoJSON["Rain"]);
       updateHum(infoJSON["Hum"]);
       updatePh(infoJSON["Ph"]);
@@ -94,7 +99,7 @@ var submitCoords = async function () {
           });
 
           const result = await response.json();
-          updateTemp(result['temp'])
+          updateTemp(Math.round(result['temp'] * 10) / 10)
           updateRain(result['precipitation'])
           updateHum(result['humidity'])
           updatePh(result['ph'])
@@ -177,15 +182,15 @@ var submitCoords = async function () {
         </select>
         <img src={myImage} className={"imgPlace " + imgDis}></img>
         <ul className={"list-group " + dataDis}>
-          <li className="list-group-item">Temperature: {Temp} °F</li>
-          <li className="list-group-item">Rainfall: {Rainfall} mm</li>
-          <li className="list-group-item">Humidity: {Humidity}</li>
-          <li className="list-group-item">Ph: {Ph}</li>
-          <li className="list-group-item">Nitrogen (N): {Nit}%</li>
-          <li className="list-group-item">Phosphorus (P): {Phosp}%</li>
-          <li className="list-group-item">Potassium (K): {Pot}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Temperature: {Temp} °F</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Rainfall: {Rainfall} mm</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Humidity: {Humidity}</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Ph: {Ph}</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Nitrogen (N): {Nit}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Phosphorus (P): {Phosp}%</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Potassium (K): {Pot}%</li>
         </ul>
-        <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
+        <p className="CoordHolder" style={{"marginTop": coordMargin}}>Latitude : {Math.round(lat * 10000) / 10000}     Longitude: {Math.round(long * 10000) / 10000}</p>
         <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit} style={{"backgroundColor": buttonColor, "borderColor": buttonBorder}}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
@@ -193,7 +198,7 @@ var submitCoords = async function () {
           <l-bouncy
             size="35"
             speed="1.75" 
-            color="black" 
+            color="white" 
             ></l-bouncy>
           </div>
         </div>
