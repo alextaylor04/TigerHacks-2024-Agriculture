@@ -14,7 +14,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const [Humidity, updateHum] = useState('');
   const [Ph, updatePh] = useState('');
   const [Nit, updateNit] = useState('');
-  const [Posp, updatePosp] = useState('');
+  const [Phosp, updatePhosp] = useState('');
   const [Pot, updatePot] = useState('');
   var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
   const [dataDis, updateDataDis] = useState('d-none');
@@ -26,6 +26,47 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); // ./Images/Solid_white.png'
   };
+  // window.onload = (event) => {
+  //   updateTemp(infoJSON["Temp"]);
+  //   updateRain(infoJSON["Rain"]);
+  //   updateHum(infoJSON["Hum"]);
+  //   updatePh(infoJSON["Ph"]);
+  //   updateNit(infoJSON["Nit"]);
+  //   updatePosp(infoJSON["Posp"]);
+  //   updatePot(infoJSON["Pot"]);
+  // };
+  // do checks here
+  var submitCoords = async function () {
+
+    const locationData = {
+      latitude: lat,
+      longitude: long,
+      fertilizer: 1
+  };
+
+  try {
+      const response = await fetch('/api/data', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(locationData),
+      });
+
+      const result = await response.json();
+      updateTemp(result['temp'])
+      updateRain(result['precipitation'])
+      updateHum(result['humidity'])
+      updatePh(result['ph'])
+      updateNit(result['nitrogen'])
+      updatePhosp(result['phosphorous'])
+      updatePot(result['potassium'])
+
+      console.log(result); // Handle the response from the server
+  } catch (error) {
+      console.error('Error sending location:', error);
+  }
+
   window.onload = (event) => {
     // 21-0-0_ammonium_sulfate.png
     updateTemp(infoJSON["Temp"]);
@@ -73,7 +114,6 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
     }
   }
 
-  const [currentTime, setCurrentTime] = useState(0);
     return (
       <div className="leftSidebar">
         <p className={"fertilizer " + stageOneDis}>Select Fertilizer</p>
@@ -98,7 +138,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
           <li className="list-group-item">Humidity: {Humidity}</li>
           <li className="list-group-item">Ph: {Ph}</li>
           <li className="list-group-item">Nitrogen (N): {Nit}%</li>
-          <li className="list-group-item">Phosphorus (P): {Posp}%</li>
+          <li className="list-group-item">Phosphorus (P): {Phosp}%</li>
           <li className="list-group-item">Potassium (K): {Pot}%</li>
         </ul>
         <p className="CoordHolder" style={{"marginTop": coordMargin}}>Longitute: {long}   Latitude: {lat}</p>
