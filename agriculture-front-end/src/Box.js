@@ -88,7 +88,15 @@ var submitCoords = async function () {
         longitude: long,
         fertilizer: fertValue
       };
-
+    
+  try {
+      const response = await fetch('http://127.0.0.1:5000/api/data', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(locationData),
+      });
         
       try {
           const response = await fetch('/api/data', {
@@ -112,6 +120,14 @@ var submitCoords = async function () {
       } catch (error) {
           console.error('Error sending location:', error);
       }
+try {
+    const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(locationData),
+    });
 
     try {
         const response = await fetch('/api/pred/data', {
