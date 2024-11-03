@@ -10,7 +10,7 @@
     width:100%;
 }
 .fertilizer {
-    margin-top: 20px;
+    margin-top: -5px;
     color: white;
 }
 .form-select {
@@ -58,4 +58,20 @@
 
 .CoordHolder {
     color: white;
+}
+.logoHolder {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    justify-content: right;
+    margin-right: 40px;
+}
+.logo {
+    height: 70px;
+}
+.textTitle {
+    margin-top: 10px;
+    margin-right: 5px;
 }

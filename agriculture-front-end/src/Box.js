@@ -20,7 +20,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   const [dataDis, updateDataDis] = useState('d-none');
   const [stageOneDis, updatestageOneDis] = useState('');
   const [lastStageDis, updateLastStageDis] = useState('d-none');
-  const [coordMargin, updateCoordMargin] = useState('50px');
+  const [coordMargin, updateCoordMargin] = useState('30px');
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
@@ -34,6 +34,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   const [mapClickStatus, updateMapClickStatus] = useState(-1);
   const [buttonStatus, updateButtonStatus] = useState(-1);
   const [myImage, updateMyImage] = useState(require('./Images/Solid_white.png')); 
+  const [logo, updateMyLogo] = useState(require('./Images/tractor-removebg-preview.png')); 
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } }); 
   };
@@ -67,8 +68,8 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   var oldSubmit = function () {
     if (buttonStatus === 1) {
       updateTemp(Math.round(infoJSON["Temp"] * 10) / 10);
-      updateRain(infoJSON["Rain"]);
-      updateHum(infoJSON["Hum"]);
+      updateRain(Math.round(infoJSON["Rain"] * 10) / 10);
+      updateHum(Math.round(infoJSON["Hum"] * 10) / 10);
       updatePh(infoJSON["Ph"]);
       updateNit(infoJSON["Nit"]);
       updatePhosp(infoJSON["Posp"]);
@@ -100,8 +101,8 @@ var submitCoords = async function () {
 
           const result = await response.json();
           updateTemp(Math.round(result['temp'] * 10) / 10)
-          updateRain(result['precipitation'])
-          updateHum(result['humidity'])
+          updateRain(Math.round(result['precipitation'] * 10) / 10)
+          updateHum(Math.round(result['humidity'] * 10) / 10)
           updatePh(result['ph'])
           updateNit(result['nitrogen'])
           updatePhosp(result['phosphorous'])
@@ -165,6 +166,10 @@ var submitCoords = async function () {
 
     return (
       <div className="leftSidebar">
+        <div class="logoHolder">
+          <p class="textTitle">CropAI</p>
+          <img className="logo" src={logo}></img>
+        </div>
         <p className={"fertilizer " + stageOneDis}>Select Fertilizer</p>
         <select className={"form-select " + stageOneDis} onChange={changeSelect} style={{"width": "280px"}} aria-label="Default select example">
           <option defaultValue>Select</option>
@@ -185,7 +190,7 @@ var submitCoords = async function () {
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Temperature: {Temp} °F</li>
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Rainfall: {Rainfall} mm</li>
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Humidity: {Humidity}</li>
-          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Ph: {Ph}</li>
+          <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>pH: {Ph}</li>
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Nitrogen (N): {Nit}%</li>
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Phosphorus (P): {Phosp}%</li>
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Potassium (K): {Pot}%</li>
