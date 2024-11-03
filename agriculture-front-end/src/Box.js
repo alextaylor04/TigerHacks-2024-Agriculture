@@ -53,7 +53,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
 
     
   try {
-      const response = await fetch('/api/data', {
+      const response = await fetch('http://127.0.0.1:5000/api/data', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData}) => {
   }
 
 try {
-    const response = await fetch('/api/pred/data', {
+    const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
