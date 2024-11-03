@@ -93,4 +93,4 @@ def weather(lat, lon): # Returns Temperature, Humidity, and Yearly Rainfall in t
 	# print(mean_temperature_2m)
 	# print(mean_relative_humidity_2m)
 	# print(yearly_precipitation)
-	return mean_temperature_2m, mean_relative_humidity_2m, yearly_precipitation
+	return float(mean_temperature_2m), float(mean_relative_humidity_2m), float(yearly_precipitation)
