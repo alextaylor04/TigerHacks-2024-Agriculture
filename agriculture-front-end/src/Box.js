@@ -13,6 +13,7 @@ const Box = ({lat, updateLat, long, updateLong}) => {
   const [Posp, updatePosp] = useState('');
   const [Pot, updatePot] = useState('');
   var infoJSON = {"Temp": 70, "Rain": 126.0, "Hum": 42.0, "Ph": 9.6, "Nit": 12.4, "Posp": 12.6, "Pot": 12.2};
+  const [test1, updateTest1] = useState('');
   const goToCrops = () => {
     navigate('/Crops', { state: { userId: 123 } });
   };
@@ -24,20 +25,15 @@ const Box = ({lat, updateLat, long, updateLong}) => {
     updateNit(infoJSON["Nit"]);
     updatePosp(infoJSON["Posp"]);
     updatePot(infoJSON["Pot"]);
+    updateTest1(""); // d-none
   };
   var submitCoords = function () {
     console.log("test");
   }
   const [currentTime, setCurrentTime] = useState(0);
-  // useEffect(() => {
-  //   fetch('/time').then(res => res.json()).then(data => {
-  //     setCurrentTime(data.time);
-  //     console.log(currentTime);
-  //   });
-  // }, []);
     return (
       <div className="leftSidebar">
-        <ul className="list-group">
+        <ul className={"list-group " + test1}>
           <li className="list-group-item">Temperature: {Temp} °F</li>
           <li className="list-group-item">Rainfall: {Rainfall} mm</li>
           <li className="list-group-item">Humidity: {Humidity}</li>

@@ -13,6 +13,7 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
         const lat = latLng.lat;
         const lng = latLng.lng;
         updateLat(lat);
+        updateLong(lng);
         console.log(lat)
         console.log(lng)
     };
@@ -39,8 +40,8 @@ const MapComp = ({inputLan, updateLat, inputLong, updateLong}) => {
     return <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <Map 
         style = {{width: '65%', height: '100vh'}}
-        defaultCenter={{lat:22.54992, lng:0}}
-        defaultZoom={3}
+        defaultCenter={{lat:39.03010135948161, lng:-93.2481203134825}}
+        defaultZoom={4}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
         mapTypeId={typeValue}
