@@ -1,4 +1,4 @@
-# Get Fertilizer
+# Get Fertilizer, used standard fertilizer values
 def npk(fertilizer):
     fertilizer_npk = {
         1: (46, 0, 0),   # Urea
@@ -15,8 +15,8 @@ def npk(fertilizer):
     }
     
     fertilizer = int(fertilizer) #guarantee it is an integer
-    nitrogen, phosphorus, potassium = fertilizer_npk.get(fertilizer)
-    nitrogen += 30
+    nitrogen, phosphorus, potassium = fertilizer_npk.get(fertilizer) 
+    nitrogen += 30 #added 30 to normalize it to the dataset because we were unable to find an API for NPK values on all locations.
     phosphorus += 30
     potassium += 30
     

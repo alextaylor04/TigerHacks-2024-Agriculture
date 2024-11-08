@@ -9,6 +9,7 @@ import google_image
 app = Flask(__name__)
 CORS(app)
 
+#Handles the raw API data for the React-Flask
 @app.route('/api/data', methods=['POST'])
 def api_data():
     data = request.json  # Get JSON data from the request
@@ -24,9 +25,10 @@ def api_data():
 
     return jsonify(raw_api_dict)
 
+#Handles the prediction for the raw API data
 @app.route('/api/pred/data', methods=['POST'])
 def make_prediction():
-    data = request.json  # Get JSON data from the request
+    data = request.json 
     latitude = data.get('latitude')
     longitude = data.get('longitude')
     fertilizer = data.get('fertilizer')
@@ -51,7 +53,6 @@ def make_prediction():
     labels = ['cropPredictions', 'answer1part1', 'answer2part1', 'answer3part1', 'answer1part2', 'answer2part2', 'answer3part2', 'answer1part3', 'answer2part3', 'answer3part3', 'prediction_images']
     values = [predictions]
     for desc in crop_desc:
-        print(desc)
         values.append(desc)
     values.append(prediction_images)
 

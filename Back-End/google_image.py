@@ -7,6 +7,7 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
 CSE_ID = os.getenv("GOOGLE_CX")
 
+#ChatGPT was used to help assist with the ideas for this function, this function helps to find the top image search result for a query
 def google_image_search(query, num_results=1):
 
     url = 'https://www.googleapis.com/customsearch/v1'

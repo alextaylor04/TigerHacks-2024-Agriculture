@@ -63,7 +63,6 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
     updateLastStageDis('');
   }
   var movingToCropsSetup = function () {
-    updateaiData(1);
     goToCrops();
   }
   var oldSubmit = function () {
@@ -81,76 +80,57 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
     }
   }
 
-// var submitCoords = async function () {
-//   if (buttonStatus === 1) {
-//       sumbitPhase();
-//       const locationData = {
-//         latitude: lat,
-//         longitude: long,
-//         fertilizer: fertValue
-//       };
-    
-//   try {
-//       const response = await fetch('http://127.0.0.1:5000/api/data', {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(locationData),
-//       });
-        
-//       try {
-//           const response = await fetch('/api/data', {
-//               method: 'POST',
-//               headers: {
-//                   'Content-Type': 'application/json',
-//               },
-//               body: JSON.stringify(locationData),
-//           });
-
-//           const result = await response.json();
-//           updateTemp(Math.round(result['temp'] * 10) / 10)
-//           updateRain(Math.round(result['precipitation'] * 10) / 10)
-//           updateHum(Math.round(result['humidity'] * 10) / 10)
-//           updatePh(result['ph'])
-//           updateNit(result['nitrogen'])
-//           updatePhosp(result['phosphorous'])
-//           updatePot(result['potassium'])
-
-//           // Handle the response from the server
-//       } catch (error) {
-//           console.error('Error sending location:', error);
-//       }
-//     try {
-//       const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(locationData),
-//       });
-
-//       try {
-//           const response = await fetch('/api/pred/data', {
-//               method: 'POST',
-//               headers: {
-//                   'Content-Type': 'application/json',
-//               },
-//               body: JSON.stringify(locationData),
-//           });
-
-//           const result = await response.json();
-//           updateaiData(result);
-//           finishLoading();
+  var submitCoords = async function () {
+    if (buttonStatus === 1) {
+        sumbitPhase();
+        const locationData = {
+          latitude: lat,
+          longitude: long,
+          fertilizer: fertValue
+        };
+  
+        //ChatGPT was used a little here just to see how fetch requests work with Flask, then was adapted to our codebase
+        try {
+            const response = await fetch('/api/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(locationData),
+            });
+  
+            const result = await response.json();
+            updateTemp(Math.round(result['temp'] * 10) / 10)
+            updateRain(Math.round(result['precipitation'] * 10) / 10)
+            updateHum(Math.round(result['humidity'] * 10) / 10)
+            updatePh(Math.round(result['ph'] * 10) / 10)
+            updateNit(result['nitrogen'])
+            updatePhosp(result['phosphorous'])
+            updatePot(result['potassium'])
+  
+        } catch (error) {
+            console.error('Error sending location:', error);
+        }
+  
+      try {
+          const response = await fetch('/api/pred/data', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(locationData),
+          });
+  
+          const result = await response.json();
+          updateaiData(result);
+          finishLoading();
           
-//       } catch (error) {
-//           console.error('Error sending location:', error);
-//       }
-
-//   }
-//     }
-//   }
-// }
+      } catch (error) {
+          console.error('Error sending location:', error);
+      }
+  
+    }
+  }
   
   
   bouncy.register()
@@ -215,7 +195,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
           <li className="list-group-item" style={{"backgroundColor": listGroupColor, "borderColor": listGroupBorderColor}}>Potassium (K): {Pot}%</li>
         </ul>
         <p className="CoordHolder" style={{"marginTop": coordMargin}}>Latitude : {Math.round(lat * 10000) / 10000}     Longitude: {Math.round(long * 10000) / 10000}</p>
-        <button className={"submit " + stageOneDis} id="submit" onClick={oldSubmit} style={{"backgroundColor": buttonColor, "borderColor": buttonBorder}}>Submit Coords</button>
+        <button className={"submit " + stageOneDis} id="submit" onClick={submitCoords} style={{"backgroundColor": buttonColor, "borderColor": buttonBorder}}>Submit Coords</button>
         <div className={"Loading " + LoadingState}>
           <p>Generating Optimal Crops</p>  
           <div className="test">
@@ -226,7 +206,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
             ></l-bouncy>
           </div>
         </div>
-        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crops</button>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Cropss</button>
       </div>
       );
 }
