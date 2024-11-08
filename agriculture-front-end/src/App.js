@@ -11,7 +11,7 @@ const App = () => {
   const [aiData, updateaiData] = useState('');
   const [effect, setEffect] = useState(false);
   const updateOnClick = () => {
-    setEffect(!effect); // Toggle the effect state
+    setEffect(!effect); 
   };
     return (
       <div>

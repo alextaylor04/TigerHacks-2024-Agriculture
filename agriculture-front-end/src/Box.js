@@ -16,11 +16,12 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
   const [Nit, updateNit] = useState('');
   const [Phosp, updatePhosp] = useState('');
   const [Pot, updatePot] = useState('');
-  var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
+  // var infoJSON = {"Temp": 0, "Rain": 0.0, "Hum": 0.0, "Ph": 0.0, "Nit": 0.0, "Posp": 0.0, "Pot": 0.0};
+  var infoJSON = {"Temp": 77.4, "Rain": 123.7, "Hum": 14.0, "Ph": 7.0, "Nit": 36.0, "Posp": 30.0, "Pot": 40.0};
   const [dataDis, updateDataDis] = useState('d-none');
   const [stageOneDis, updatestageOneDis] = useState('');
   const [lastStageDis, updateLastStageDis] = useState('d-none');
-  const [coordMargin, updateCoordMargin] = useState('30px');
+  const [coordMargin, updateCoordMargin] = useState('20px');
   const [LoadingState, updateLoadingState] = useState('d-none');
   const [imgDis, updateImgDis] = useState('d-none'); 
   const [fertValue, updateFertValue] = useState(-1);
@@ -80,74 +81,76 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
     }
   }
 
-var submitCoords = async function () {
-  if (buttonStatus === 1) {
-      sumbitPhase();
-      const locationData = {
-        latitude: lat,
-        longitude: long,
-        fertilizer: fertValue
-      };
+// var submitCoords = async function () {
+//   if (buttonStatus === 1) {
+//       sumbitPhase();
+//       const locationData = {
+//         latitude: lat,
+//         longitude: long,
+//         fertilizer: fertValue
+//       };
     
-  try {
-      const response = await fetch('http://127.0.0.1:5000/api/data', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(locationData),
-      });
+//   try {
+//       const response = await fetch('http://127.0.0.1:5000/api/data', {
+//           method: 'POST',
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(locationData),
+//       });
         
-      try {
-          const response = await fetch('/api/data', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(locationData),
-          });
+//       try {
+//           const response = await fetch('/api/data', {
+//               method: 'POST',
+//               headers: {
+//                   'Content-Type': 'application/json',
+//               },
+//               body: JSON.stringify(locationData),
+//           });
 
-          const result = await response.json();
-          updateTemp(Math.round(result['temp'] * 10) / 10)
-          updateRain(Math.round(result['precipitation'] * 10) / 10)
-          updateHum(Math.round(result['humidity'] * 10) / 10)
-          updatePh(result['ph'])
-          updateNit(result['nitrogen'])
-          updatePhosp(result['phosphorous'])
-          updatePot(result['potassium'])
+//           const result = await response.json();
+//           updateTemp(Math.round(result['temp'] * 10) / 10)
+//           updateRain(Math.round(result['precipitation'] * 10) / 10)
+//           updateHum(Math.round(result['humidity'] * 10) / 10)
+//           updatePh(result['ph'])
+//           updateNit(result['nitrogen'])
+//           updatePhosp(result['phosphorous'])
+//           updatePot(result['potassium'])
 
-          // Handle the response from the server
-      } catch (error) {
-          console.error('Error sending location:', error);
-      }
-try {
-    const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(locationData),
-    });
+//           // Handle the response from the server
+//       } catch (error) {
+//           console.error('Error sending location:', error);
+//       }
+//     try {
+//       const response = await fetch('http://127.0.0.1:5000/api/pred/data', {
+//           method: 'POST',
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(locationData),
+//       });
 
-    try {
-        const response = await fetch('/api/pred/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(locationData),
-        });
+//       try {
+//           const response = await fetch('/api/pred/data', {
+//               method: 'POST',
+//               headers: {
+//                   'Content-Type': 'application/json',
+//               },
+//               body: JSON.stringify(locationData),
+//           });
 
-        const result = await response.json();
-        updateaiData(result);
-        finishLoading();
-        
-    } catch (error) {
-        console.error('Error sending location:', error);
-    }
+//           const result = await response.json();
+//           updateaiData(result);
+//           finishLoading();
+          
+//       } catch (error) {
+//           console.error('Error sending location:', error);
+//       }
 
-  }
-}
+//   }
+//     }
+//   }
+// }
   
   
   bouncy.register()
@@ -182,8 +185,8 @@ try {
 
     return (
       <div className="leftSidebar">
-        <div class="logoHolder">
-          <p class="textTitle">CropAI</p>
+        <div className="logoHolder">
+          <p className="textTitle">CropAI</p>
           <img className="logo" src={logo}></img>
         </div>
         <p className={"fertilizer " + stageOneDis}>Select Fertilizer</p>
@@ -223,7 +226,7 @@ try {
             ></l-bouncy>
           </div>
         </div>
-        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crop</button>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crops</button>
       </div>
       );
 }

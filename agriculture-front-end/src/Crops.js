@@ -32,39 +32,55 @@ const Crops = ({aiData, updateaiData}) => {
 
     const [logo, updateMyLogo] = useState(require('./Images/tractor-removebg-preview.png'));     
     useEffect(() => {
-        console.log(aiData)
-    }
-    useEffect(() => {
-        updateP1(aiData.cropPredictions[0]);
-        updateP2(aiData.cropPredictions[1]);
-        updateP3(aiData.cropPredictions[2]);
+        updateP1("Corn");
+        updateP2("Potato");
+        updateP3("Grapes");
 
-        updateI1(aiData.prediction_images[0][0]);
-        updateI2(aiData.prediction_images[1][0]);
-        updateI3(aiData.prediction_images[2][0]);
+        updateI1("https://cdn.britannica.com/36/167236-050-BF90337E/Ears-corn.jpg");
+        updateI2("https://plantix.net/en/library/assets/custom/crop-images/potato.jpeg");
+        updateI3("https://img.imageboss.me/fourwinds/width/425/dpr:2/shop/products/blackmonukka.jpg?v=1729795625");
         
-        updateA1P1(aiData.answer1part1);
-        updateA1P2(aiData.answer1part2);
-        updateA1P3(aiData.answer1part3);
-        updateA2P1(aiData.answer2part1);
-        updateA2P2(aiData.answer2part2);
-        updateA2P3(aiData.answer2part3);
-        updateA3P1(aiData.answer3part1);
-        updateA3P2(aiData.answer3part2);
-        updateA3P3(aiData.answer3part3);
+        updateA1P1("test");
+        updateA1P2("test");
+        updateA1P3("test");
+        updateA2P1("test");
+        updateA2P2("test");
+        updateA2P3("test");
+        updateA3P1("test");
+        updateA3P2("test");
+        updateA3P3("test");
+
+        // updateP1(aiData.cropPredictions[0]);
+        // updateP2(aiData.cropPredictions[1]);
+        // updateP3(aiData.cropPredictions[2]);
+
+        // updateI1(aiData.prediction_images[0][0]);
+        // updateI2(aiData.prediction_images[1][0]);
+        // updateI3(aiData.prediction_images[2][0]);
+        
+        // updateA1P1(aiData.answer1part1);
+        // updateA1P2(aiData.answer1part2);
+        // updateA1P3(aiData.answer1part3);
+        // updateA2P1(aiData.answer2part1);
+        // updateA2P2(aiData.answer2part2);
+        // updateA2P3(aiData.answer2part3);
+        // updateA3P1(aiData.answer3part1);
+        // updateA3P2(aiData.answer3part2);
+        // updateA3P3(aiData.answer3part3);
     }, []);
 
-    return (<div className = "everything">
-        <div className="Home-Icon" onClick={goToHome}>
-        <img className="logo" src={logo}></img>
-        &emsp;Home
-        </div>
-        <h1 className="optimize">Three AI Optimized Crops:</h1>
+    
     return (
     <>
-    {aiData != 0 ? (<div className = "everything">
-        <div className="Home-Icon" onClick={goToHome}>Home</div>
-        <h1>Three Optimized Crops:</h1>
+    {aiData != 0 ? (
+        
+        <div className = "everything">
+            <div className="Home-Icon">
+                <img className="logo" src={logo} alt="Home icon" onClick={goToHome}/>
+                
+                <p class="homeLink" onClick={goToHome}>&emsp;Home</p>
+                <h3 className="mainTitle">CropAI</h3>
+            </div>
         <div className='multiCropHolder'>
             <div className="cropHolder">
                 <p className='name'>{plant1}</p>
