@@ -36,35 +36,37 @@ const Crops = ({ aiData, updateaiData }) => {
     const [logo, updateMyLogo] = useState(require('./Images/tractor-removebg-preview.png'));
 
     useEffect(() => {
-        updateP1(aiData.cropPredictions[0]);
-        updateP2(aiData.cropPredictions[1]);
-        updateP3(aiData.cropPredictions[2]);
+        if (aiData != 0) {
+            updateP1(aiData.cropPredictions[0]);
+            updateP2(aiData.cropPredictions[1]);
+            updateP3(aiData.cropPredictions[2]);
 
-        updateI1(aiData.prediction_images[0][0]);
-        updateI2(aiData.prediction_images[1][0]);
-        updateI3(aiData.prediction_images[2][0]);
+            updateI1(aiData.prediction_images[0][0]);
+            updateI2(aiData.prediction_images[1][0]);
+            updateI3(aiData.prediction_images[2][0]);
 
-        updateA1P1(aiData.answer1part1);
-        updateA1P2(aiData.answer1part2);
-        updateA1P3(aiData.answer1part3);
-        updateA2P1(aiData.answer2part1);
-        updateA2P2(aiData.answer2part2);
-        updateA2P3(aiData.answer2part3);
-        updateA3P1(aiData.answer3part1);
-        updateA3P2(aiData.answer3part2);
-        updateA3P3(aiData.answer3part3);
+            updateA1P1(aiData.answer1part1);
+            updateA1P2(aiData.answer1part2);
+            updateA1P3(aiData.answer1part3);
+            updateA2P1(aiData.answer2part1);
+            updateA2P2(aiData.answer2part2);
+            updateA2P3(aiData.answer2part3);
+            updateA3P1(aiData.answer3part1);
+            updateA3P2(aiData.answer3part2);
+            updateA3P3(aiData.answer3part3);
+        }
     }, []);
 
     return (
         <>
-            <div className="everything">
-                <div className="Home-Icon" onClick={goToHome}>
-                    <img className="logo" src={logo} alt="Home icon" />
-                    &emsp;Home
-                    <h3 className="mainTitle">CropAI</h3>
-                </div>
-                <h1 className="optimize">Three AI Optimized Crops:</h1>
-                {aiData !== 0 ? (
+            {aiData !== 0 ? (
+                <div className="everything">
+                    <div className="Home-Icon">
+                        <img className="logo" src={logo} alt="Home icon" onClick={goToHome}/>
+                        <p className="HomeTitle" onClick={goToHome}>Home</p>
+                        <h3 className="mainTitle">CropAI</h3>
+                    </div>
+                    <h1 className="optimize">Three AI Optimized Crops:</h1>
                     <div className="multiCropHolder">
                         <div className="cropHolder">
                             <p className="name">{plant1}</p>
@@ -97,10 +99,11 @@ const Crops = ({ aiData, updateaiData }) => {
                             <p className="text">&emsp;{a3p3}</p>
                         </div>
                     </div>
-                ) : (
-                    <div>error</div>
-                )}
-            </div>
+                </div>
+            ) : (
+                <div>error</div>
+            )}
+            
         </>
     );
 };

@@ -24,10 +24,20 @@
     align-items: center;
 }
 .mainTitle {
-    margin-left: 33.6%;
+    margin-left: 28.6%;
     font-weight: 600;
     color:#1db050;
     font-size: 45px;
+}
+.HomeTitle {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.logo:hover {
+    cursor: pointer;
+}
+.HomeTitle:hover {
+    cursor: pointer;
 }
 .logo{
     height: 100px;
@@ -39,6 +49,9 @@
     background-color: #1db050;
     border-radius: 10px;
     border: 10px solid rgb(0, 78, 18);
+}
+.cropHolder:hover {
+    box-shadow: 0px 0px 2.5px rgb(104, 104, 104);
 }
 
 .cropHolder img {

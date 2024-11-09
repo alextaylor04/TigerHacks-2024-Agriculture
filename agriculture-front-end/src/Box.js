@@ -206,7 +206,7 @@ const Box = ({lat, updateLat, long, updateLong, aiData, updateaiData, effect}) =
             ></l-bouncy>
           </div>
         </div>
-        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Cropss</button>
+        <button className={"viewCrop " + lastStageDis} onClick={movingToCropsSetup}>View Crops</button>
       </div>
       );
 }
