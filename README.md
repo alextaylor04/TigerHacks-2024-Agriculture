@@ -10,7 +10,27 @@ This agriculture project is a real-world application for farmers to choose the b
 
 Setup
 ---------------
+1.) Add an .env file in the agriculture-front-end folder
+2.) Write the line 'REACT_APP_GOOGLE_MAPS_API_KEY=[key here]'
+3.) Replace the [key here] with your own google maps api key
 
-Instructions
+1.) Add an .env file in the Back-end folder
+2.) Write the lines:
+  'GOOGLE_API_KEY=[key here]'
+  'GOOGLE_CX=[key here]'
+  'OPENAI_KEY=[key here]'
+3.) Replace the [key here]'s with your keys
+
+1.) Need to setup React/Nodejs files in the agriculture-front-end folder
+2.) Need to setup venv in the Back-end folder
+3.) Need to setup Tensorflow
+
+Running Instructions
 ------------------------------------
+1.) cd into the Back-end folder
+2.) type: venv/Scripts/activate
+3.) type: flask run
+4.) Then open another terminal
+5.) cd into the agriculture-front-end folder
+6.) type: npm start
 
