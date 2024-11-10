@@ -1,4 +1,4 @@
-# TigerHacks-2024-Agriculture
+# CropAI  (TigerHacks 2024)
 
 ![Screenshot 2024-11-04 162912](https://github.com/user-attachments/assets/798130f9-e255-4c3c-8a49-cf5fcf1da9ae)
 
@@ -10,27 +10,27 @@ This agriculture project is a real-world application for farmers to choose the b
 
 Setup
 ---------------
-1.) Add an .env file in the agriculture-front-end folder
-2.) Write the line 'REACT_APP_GOOGLE_MAPS_API_KEY=[key here]'
-3.) Replace the [key here] with your own google maps api key
+1.) Add an .env file in the agriculture-front-end folder <br/>
+2.) Write the line 'REACT_APP_GOOGLE_MAPS_API_KEY=[key here]' <br/>
+3.) Replace the [key here] with your own google maps api key <br/>
 
-1.) Add an .env file in the Back-end folder
-2.) Write the lines:
-  'GOOGLE_API_KEY=[key here]'
-  'GOOGLE_CX=[key here]'
-  'OPENAI_KEY=[key here]'
-3.) Replace the [key here]'s with your keys
+1.) Add an .env file in the Back-end folder <br/>
+2.) Write the lines: <br/>
+  'GOOGLE_API_KEY=[key here]' <br/>
+  'GOOGLE_CX=[key here]' <br/>
+  'OPENAI_KEY=[key here]' <br/>
+3.) Replace the [key here]'s with your keys <br/>
 
-1.) Need to setup React/Nodejs files in the agriculture-front-end folder
-2.) Need to setup venv in the Back-end folder
-3.) Need to setup Tensorflow
+1.) Need to setup React/Nodejs files in the agriculture-front-end folder <br/>
+2.) Need to setup venv in the Back-end folder <br/>
+3.) Need to setup Tensorflow <br/>
 
 Running Instructions
 ------------------------------------
-1.) cd into the Back-end folder
-2.) type: venv/Scripts/activate
-3.) type: flask run
-4.) Then open another terminal
-5.) cd into the agriculture-front-end folder
-6.) type: npm start
+1.) cd into the Back-end folder <br/>
+2.) type: venv/Scripts/activate <br/>
+3.) type: flask run <br/>
+4.) Then open another terminal <br/>
+5.) cd into the agriculture-front-end folder <br/>
+6.) type: npm start <br/>
 
