@@ -5,8 +5,31 @@
 Youtube: https://www.youtube.com/watch?v=vEONHM2qx_M <br/>
 Devpost: https://devpost.com/software/agriculture-machine-learning-project-tigerhacks-2024
 
-This agriculture project is a real-world application for farmers to choose the best crop to plant in a given piece of farmland. The farmer would start by choosing the location of their farm, as well as the fertilizer they plan to use in order to generate more accurate values for the soil. The farmer is then shown information about the weather at the location they selected as an AI performs a prediction based on the data provided. The response of the AI model (a Neural Network Machine Learning Algorithm) is synthesized using ChatGPT to prepare it for display on the website. The farmer is then given the option to view the top 3 crop suggestions, including one generated separate from the data to guarantee at least one of the crops suggested is commonly grown within the region the farmer chose.
+**Pick a spot on the map and the fertilizer you use, and get three crops worth planting there,
+with the reasoning in plain language.** Built at TigerHacks 2024 (November 2024), a university
+hackathon.
 
+The farmer chooses the farm's location and fertilizer. The app fills in what the land is like
+from public data, runs a small neural network over it, and shows the top three crops with a
+short explanation and a picture of each, including one suggestion chosen to be commonly grown
+in the farmer's own region.
+
+## How it works
+
+- **The land, from its coordinates.** Temperature, humidity and rainfall come from Open-Meteo.
+  Soil pH comes from ISRIC SoilGrids. Nitrogen, phosphorus and potassium come from the chosen
+  fertilizer. No farmer has to type a soil report.
+- **The model.** A Keras neural network trained on a public crop-recommendation dataset (2,200
+  rows, 22 crops, from those seven inputs: N, P, K, temperature, humidity, pH, rainfall) ranks
+  the crops. The training notebook is in `Neural Network ML Models/`.
+- **The regional check.** That dataset's crops include rice, chickpea, mung bean and
+  pomegranate, which can be a poor fit for a farm in Missouri. So the third suggestion comes
+  from GPT-4 instead: given the same numbers and the coordinates, it is asked for a different
+  crop that grows in that region. GPT-4 also writes the explanation for all three.
+- **Pictures** of each crop come from Google Custom Search.
+- **The app** is a React front end (`agriculture-front-end/`) talking to a Flask back end
+  (`Back-End/`) over two endpoints: `/api/data` for the location's raw numbers and
+  `/api/pred/data` for the recommendation.
 
 Setup
 ---------------
@@ -33,4 +56,3 @@ Running Instructions
 4.) Then open another terminal <br/>
 5.) cd into the agriculture-front-end folder <br/>
 6.) type: npm start <br/>
-
